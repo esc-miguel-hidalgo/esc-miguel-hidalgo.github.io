@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌱 Nuestro Huerto | Esc. Prim. Miguel Hidalgo</title>
+<meta name="description" content="El Huerto Escolar como estrategia integral de aprendizaje y vinculación comunitaria. Escuela Primaria Miguel Hidalgo, Los Reyes San Salvador, Texcoco.">
+<meta property="og:title" content="🌱 Nuestro Huerto Escolar | Esc. Prim. Miguel Hidalgo">
+<meta property="og:description" content="Aprendizaje que crece desde la tierra. Proyecto innovador de vinculación escuela-comunidad.">
+<meta property="og:image" content="escudo.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;--navy-deep:#111C33;--navy-mid:#243656;
+  --rust:#C0392B;--terracotta:#D4654A;
+  --sand:#FAF3E8;--sand-warm:#FFF7ED;
+  --amber:#E8A838;--amber-soft:#F5C563;
+  --sage:#5A8A6A;--sage-light:#7DB88D;--sage-dark:#3D6B4A;
+  --sky:#4A90C4;--sky-soft:#6AAED6;
+  --cream:#FFFDF8;
+  --earth:#8B6F47;--earth-light:#A8895C;
+  --leaf:#4CAF50;--leaf-dark:#2E7D32;--leaf-light:#81C784;
+  --sun:#FDD835;--sun-soft:#FFF176;
+  --sh-xs:0 1px 3px rgba(27,42,74,.06);--sh-sm:0 4px 16px rgba(27,42,74,.07);
+  --sh-md:0 8px 32px rgba(27,42,74,.09);--sh-lg:0 20px 50px rgba(27,42,74,.13);
+  --r:20px;--r-sm:14px;--r-xs:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:#3A3A3A;background:var(--cream);overflow-x:hidden;line-height:1.7;cursor:none}
+h1,h2,h3,h4,h5{font-family:'Baloo 2',cursive;line-height:1.2}
+img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-style:none}
+
+/* Cursor */
+.cursor-dot{position:fixed;width:10px;height:10px;background:var(--leaf-dark);border-radius:50%;pointer-events:none;z-index:99999;transition:transform .15s ease,background .3s ease;transform:translate(-50%,-50%)}
+.cursor-ring{position:fixed;width:44px;height:44px;border:2px solid var(--leaf-light);border-radius:50%;pointer-events:none;z-index:99998;transition:transform .08s ease,width .3s ease,height .3s ease,border-color .3s ease;transform:translate(-50%,-50%)}
+#chalkCanvas{position:fixed;inset:0;pointer-events:none;z-index:99997}
+.cursor-hover .cursor-dot{transform:translate(-50%,-50%) scale(2.5);background:var(--sun)}
+.cursor-hover .cursor-ring{width:60px;height:60px;border-color:var(--leaf)}
+@media(hover:none){.cursor-dot,.cursor-ring,#chalkCanvas{display:none!important}body{cursor:auto}}
+
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.rv{opacity:0;transform:translateY(50px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}.rv.vis{opacity:1;transform:translateY(0)}
+.rv-scale{opacity:0;transform:scale(.85);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}.rv-scale.vis{opacity:1;transform:scale(1)}
+
+/* ═══ BACK NAV ═══ */
+.back-nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(27,42,74,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  padding:12px 0;transition:box-shadow .4s ease;
+}
+.back-nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.2)}
+.back-nav .container{display:flex;align-items:center;justify-content:space-between}
+.back-link{
+  display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);
+  font-weight:600;font-size:.88rem;transition:color .3s;
+}
+.back-link:hover{color:var(--amber)}
+.back-link img{width:36px}
+.back-nav-title{color:#fff;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:700}
+.back-nav-title span{color:var(--leaf-light)}
+
+/* ═══ HERO ═══ */
+.hero{
+  min-height:100vh;
+  background:var(--sage-dark);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero-shapes{position:absolute;inset:0;pointer-events:none}
+/* Organic leaf/nature shapes */
+.leaf-shape{position:absolute;border-radius:50%;opacity:.08}
+.ls1{width:400px;height:400px;background:var(--leaf);top:-100px;right:-80px;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:leafFloat 12s ease-in-out infinite}
+.ls2{width:300px;height:300px;background:var(--sun);bottom:-80px;left:-60px;border-radius:40% 60% 30% 70%/60% 40% 50% 50%;animation:leafFloat 10s ease-in-out infinite 2s}
+.ls3{width:200px;height:200px;background:var(--leaf-light);top:30%;left:5%;border-radius:50% 60% 40% 70%/40% 50% 60% 50%;animation:leafFloat 14s ease-in-out infinite 1s}
+.ls4{width:250px;height:250px;background:var(--earth);bottom:15%;right:10%;border-radius:60% 40% 50% 50%/50% 60% 40% 60%;animation:leafFloat 11s ease-in-out infinite 3s}
+.ls5{width:150px;height:150px;background:var(--amber);top:15%;left:55%;border-radius:70% 30% 60% 40%/40% 70% 30% 60%;animation:leafFloat 9s ease-in-out infinite .5s}
+/* Small seed/dot particles */
+.seed{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);animation:seedFloat 6s ease-in-out infinite}
+@keyframes leafFloat{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(15px,-10px) rotate(3deg)}}
+@keyframes seedFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+.hero-content{position:relative;z-index:2;text-align:center;padding:120px 24px 80px}
+.hero-emoji{font-size:4rem;margin-bottom:20px;animation:fadeUp .8s .3s both;display:block}
+.hero h1{
+  color:#fff;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:800;
+  margin-bottom:16px;animation:fadeUp .8s .5s both;
+}
+.hero h1 em{
+  font-style:normal;display:block;
+  background:linear-gradient(135deg,var(--sun) 0%,var(--amber) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-size:clamp(2.4rem,6.5vw,4.5rem);
+}
+.hero-sub{
+  color:rgba(255,255,255,.8);font-size:clamp(1rem,2.3vw,1.3rem);
+  font-weight:500;max-width:650px;margin:0 auto 28px;animation:fadeUp .8s .7s both;
+}
+.hero-context{
+  display:inline-flex;flex-wrap:wrap;justify-content:center;gap:12px;
+  animation:fadeUp .8s .9s both;
+}
+.hero-tag{
+  background:rgba(255,255,255,.12);backdrop-filter:blur(8px);
+  color:#fff;font-size:.82rem;font-weight:600;
+  padding:8px 20px;border-radius:50px;
+  border:1px solid rgba(255,255,255,.15);
+}
+.hero-tag.accent{background:rgba(253,216,53,.2);border-color:rgba(253,216,53,.3);color:var(--sun)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp .8s 1.3s both}
+.scroll-hint span{color:rgba(255,255,255,.4);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.scroll-mouse{width:24px;height:38px;border:2px solid rgba(255,255,255,.3);border-radius:12px;position:relative}
+.scroll-mouse::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:3px;height:8px;background:var(--sun);border-radius:3px;animation:scrollB 2s ease-in-out infinite}
+@keyframes scrollB{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(10px)}}
+
+/* ═══ WAVES ═══ */
+.wave{position:relative;width:100%;overflow:hidden;line-height:0}.wave svg{display:block;width:100%;height:auto}
+
+/* ═══ SECTIONS ═══ */
+.sec{padding:90px 0}
+.sec-sand{background:var(--sand)}
+.sec-warm{background:var(--sand-warm)}
+.sec-green{background:var(--sage-dark);color:#fff}
+.sec-title{text-align:center;margin-bottom:56px}
+.sec-title h2{font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:800;color:var(--navy);margin-bottom:10px}
+.sec-green .sec-title h2{color:#fff}
+.sec-title .accent{display:block;width:56px;height:5px;border-radius:3px;margin:12px auto 0;background:linear-gradient(90deg,var(--leaf) 0%,var(--sun) 100%)}
+.sec-title p{color:#777;font-size:1rem;margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto}
+.sec-green .sec-title p{color:rgba(255,255,255,.6)}
+
+/* ═══ PROBLEM STATEMENT ═══ */
+.problem-section{text-align:center;padding:80px 24px}
+.problem-question{
+  font-family:'Baloo 2',cursive;font-size:clamp(1.5rem,3.5vw,2.2rem);
+  font-weight:800;color:var(--navy);margin-bottom:16px;
+}
+.problem-answer{
+  font-size:1.1rem;color:#666;max-width:700px;margin:0 auto;line-height:1.8;
+}
+.problem-answer strong{color:var(--sage-dark);font-weight:700}
+
+/* ═══ IMPACT STATS ═══ */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.stat-card{
+  background:#fff;border-radius:var(--r);padding:36px 24px;text-align:center;
+  box-shadow:var(--sh-sm);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
+  position:relative;overflow:hidden;
+}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.stat-card:nth-child(1)::before{background:var(--leaf)}
+.stat-card:nth-child(2)::before{background:var(--sun)}
+.stat-card:nth-child(3)::before{background:var(--sky)}
+.stat-card:nth-child(4)::before{background:var(--terracotta)}
+.stat-card:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.stat-num{font-family:'Baloo 2',cursive;font-size:2.8rem;font-weight:800;color:var(--sage-dark);line-height:1}
+.stat-card:nth-child(2) .stat-num{color:var(--amber)}
+.stat-card:nth-child(3) .stat-num{color:var(--sky)}
+.stat-card:nth-child(4) .stat-num{color:var(--terracotta)}
+.stat-label{font-size:.88rem;color:#888;font-weight:600;margin-top:8px}
+
+/* ═══ TIMELINE ═══ */
+.timeline{position:relative;max-width:900px;margin:0 auto}
+.timeline::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--leaf-light),var(--leaf),var(--sage-dark));
+  transform:translateX(-50%);border-radius:3px;
+}
+.tl-item{
+  position:relative;display:flex;align-items:flex-start;
+  margin-bottom:48px;
+}
+.tl-item:last-child{margin-bottom:0}
+.tl-item:nth-child(odd){flex-direction:row;padding-right:calc(50% + 40px)}
+.tl-item:nth-child(even){flex-direction:row-reverse;padding-left:calc(50% + 40px)}
+.tl-dot{
+  position:absolute;left:50%;top:8px;transform:translateX(-50%);
+  width:44px;height:44px;border-radius:50%;
+  background:#fff;border:3px solid var(--leaf);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;z-index:2;box-shadow:var(--sh-sm);
+}
+.tl-content{
+  background:#fff;border-radius:var(--r);padding:24px 28px;
+  box-shadow:var(--sh-sm);width:100%;
+  transition:transform .4s ease,box-shadow .4s ease;
+}
+.tl-content:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
+.tl-content h4{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:700;color:var(--sage-dark);margin-bottom:6px}
+.tl-content p{font-size:.88rem;color:#777;line-height:1.6}
+.tl-phase{
+  font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;
+  color:var(--leaf);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;
+}
+
+/* ═══ LEARNING AREAS ═══ */
+.learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.learn-card{
+  background:#fff;border-radius:var(--r);padding:36px 28px;text-align:center;
+  box-shadow:var(--sh-sm);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
+  position:relative;overflow:hidden;
+}
+.learn-card:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.learn-card .emoji{font-size:2.8rem;margin-bottom:16px;display:block}
+.learn-card h4{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:10px}
+.learn-card p{font-size:.88rem;color:#777;line-height:1.65}
+.learn-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
+}
+.learn-card:nth-child(1)::after{background:var(--sky)}
+.learn-card:nth-child(2)::after{background:var(--amber)}
+.learn-card:nth-child(3)::after{background:var(--leaf)}
+.learn-card:nth-child(4)::after{background:var(--terracotta)}
+.learn-card:nth-child(5)::after{background:var(--sage)}
+.learn-card:nth-child(6)::after{background:var(--rust)}
+
+/* ═══ CHALLENGES ═══ */
+.challenge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.ch-card{
+  background:rgba(255,255,255,.08);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r);padding:32px 28px;
+  transition:transform .4s ease,background .4s ease;
+}
+.ch-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.12)}
+.ch-card .emoji{font-size:2rem;margin-bottom:14px;display:block}
+.ch-card h4{color:#fff;font-size:1rem;font-weight:700;margin-bottom:8px}
+.ch-card p{color:rgba(255,255,255,.7);font-size:.88rem;line-height:1.65}
+.ch-card .solution{
+  margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1);
+  color:var(--sun);font-weight:600;font-size:.85rem;
+}
+
+/* ═══ GALLERY PLACEHOLDER ═══ */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gallery-item{
+  aspect-ratio:4/3;border-radius:var(--r-sm);overflow:hidden;
+  background:linear-gradient(135deg,var(--sage) 0%,var(--sage-dark) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;opacity:.3;
+  transition:transform .4s ease,opacity .4s ease;
+}
+.gallery-item:hover{transform:scale(1.03);opacity:.45}
+.gallery-item:nth-child(1){grid-row:span 2;aspect-ratio:auto}
+
+/* ═══ FUTURE ═══ */
+.future-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
+.future-card{
+  background:#fff;border-radius:var(--r-sm);padding:28px 22px;text-align:center;
+  box-shadow:var(--sh-xs);transition:transform .4s ease,box-shadow .4s ease;
+  border-top:4px solid var(--leaf-light);
+}
+.future-card:hover{transform:translateY(-5px);box-shadow:var(--sh-md)}
+.future-card .emoji{font-size:2rem;margin-bottom:10px;display:block}
+.future-card h4{font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;color:var(--navy)}
+
+/* ═══ VIDEO REEL SECTION ═══ */
+.reel-section{
+  padding:80px 0;text-align:center;
+  background:linear-gradient(170deg,var(--navy) 0%,var(--navy-deep) 100%);
+  color:#fff;position:relative;overflow:hidden;
+}
+.reel-section::before{
+  content:'';position:absolute;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(76,175,80,.08),transparent 70%);
+  top:-150px;right:-100px;
+}
+.reel-title{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:12px}
+.reel-sub{color:rgba(255,255,255,.6);font-size:1rem;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+.reel-placeholder{
+  max-width:800px;margin:0 auto;aspect-ratio:16/9;border-radius:var(--r);
+  background:rgba(255,255,255,.05);border:2px dashed rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;
+  color:rgba(255,255,255,.3);font-size:1rem;
+}
+.reel-placeholder .big-emoji{font-size:3.5rem;opacity:.5}
+
+/* ═══ CTA / FOOTER ═══ */
+.page-footer{
+  background:var(--sage-dark);padding:40px 0;text-align:center;color:rgba(255,255,255,.7);
+}
+.page-footer a{color:var(--sun);font-weight:700;transition:color .3s}
+.page-footer a:hover{color:var(--amber)}
+.page-footer p{font-size:.88rem;margin-top:10px}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .learn-grid{grid-template-columns:repeat(2,1fr)}
+  .challenge-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-item:nth-child(1){grid-row:span 1}
+  .timeline::before{left:24px}
+  .tl-item:nth-child(odd),.tl-item:nth-child(even){flex-direction:row;padding-right:0;padding-left:68px}
+  .tl-dot{left:24px}
+}
+@media(max-width:600px){
+  .sec{padding:64px 0}
+  .stats-row{grid-template-columns:1fr 1fr;gap:16px}
+  .stat-num{font-size:2.2rem}
+  .learn-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .future-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:clamp(1.6rem,6vw,2.4rem)}
+  .hero h1 em{font-size:clamp(2rem,8vw,3rem)}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<canvas id="chalkCanvas"></canvas>
+
+<!-- ═══ BACK NAV ═══ -->
+<nav class="back-nav" id="backNav">
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <img src="escudo.png" alt="Escudo"> ← Inicio
+    </a>
+    <div class="back-nav-title">🌱 <span>Nuestro Huerto</span></div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-shapes">
+    <div class="leaf-shape ls1"></div>
+    <div class="leaf-shape ls2"></div>
+    <div class="leaf-shape ls3"></div>
+    <div class="leaf-shape ls4"></div>
+    <div class="leaf-shape ls5"></div>
+    <div class="seed" style="top:12%;left:10%;animation-delay:0s"></div>
+    <div class="seed" style="top:25%;right:15%;animation-delay:1s;width:8px;height:8px"></div>
+    <div class="seed" style="bottom:20%;left:25%;animation-delay:2s"></div>
+    <div class="seed" style="top:60%;right:30%;animation-delay:.5s;width:5px;height:5px"></div>
+    <div class="seed" style="bottom:35%;left:50%;animation-delay:1.5s"></div>
+    <div class="seed" style="top:40%;left:70%;animation-delay:2.5s;width:9px;height:9px"></div>
+    <div class="seed" style="bottom:15%;right:8%;animation-delay:3s"></div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-emoji" aria-hidden="true">🌱</span>
+    <h1>Aprendizaje que crece<br><em>desde la tierra</em></h1>
+    <p class="hero-sub">El Huerto Escolar como estrategia integral de aprendizaje y vinculación comunitaria</p>
+    <div class="hero-context">
+      <span class="hero-tag">Esc. Prim. Miguel Hidalgo</span>
+      <span class="hero-tag">Zona 55 · Sector III</span>
+      <span class="hero-tag accent">Ciclo 2025–2026</span>
+      <span class="hero-tag">Jornada Ampliada</span>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-mouse"></div><span>Scroll</span></div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--sage-dark)"><svg viewBox="0 0 1440 100" preserveAspectRatio="none"><path d="M0,50 C320,110 680,10 1080,70 C1280,95 1380,45 1440,60 L1440,100 L0,100Z" fill="var(--sand)"/></svg></div>
+
+<!-- ═══ EL PROBLEMA ═══ -->
+<div class="problem-section sec-sand rv">
+  <div class="container">
+    <p class="problem-question">¿Cómo lograr que las familias sean parte activa de la educación de sus hijos?</p>
+    <p class="problem-answer">En el análisis del Programa de Mejora Continua, el colectivo docente identificó como área de oportunidad prioritaria la <strong>participación de los padres de familia en los procesos educativos</strong>. De ahí nació el Huerto Escolar: un proyecto que convierte la tierra en aula y a las familias en maestros.</p>
+  </div>
+</div>
+
+<!-- ═══ CIFRAS CLAVE ═══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-title rv"><h2>🌿 Nuestro Huerto en Números</h2><span class="accent"></span></div>
+    <div class="stats-row">
+      <div class="stat-card rv" style="transition-delay:0ms"><div class="stat-num">176</div><div class="stat-label">Estudiantes participantes</div></div>
+      <div class="stat-card rv" style="transition-delay:120ms"><div class="stat-num">7</div><div class="stat-label">Huertos — uno por grupo</div></div>
+      <div class="stat-card rv" style="transition-delay:240ms"><div class="stat-num">Mié</div><div class="stat-label">Día de familias · 9:00–11:00 h</div></div>
+      <div class="stat-card rv" style="transition-delay:360ms"><div class="stat-num">4</div><div class="stat-label">Campos formativos integrados</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--sand)"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,35 C400,90 900,5 1440,50 L1440,80 L0,80Z" fill="var(--sand-warm)"/></svg></div>
+
+<!-- ═══ CRONOLOGÍA ═══ -->
+<section class="sec sec-warm">
+  <div class="container">
+    <div class="sec-title rv"><h2>🗓️ Así lo construimos</h2><span class="accent"></span><p>8 fases, un solo objetivo: aprender haciendo</p></div>
+    <div class="timeline">
+      <div class="tl-item rv" style="transition-delay:0ms">
+        <div class="tl-dot">📣</div>
+        <div class="tl-content"><div class="tl-phase">Fase 1</div><h4>Presentación a padres de familia</h4><p>Se convocó a las familias para presentar el proyecto y promover su participación activa desde el inicio.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:100ms">
+        <div class="tl-dot">🧹</div>
+        <div class="tl-content"><div class="tl-phase">Fase 2</div><h4>Limpieza y deshierbe</h4><p>Padres, alumnos y docentes limpiaron el área destinada al huerto, preparando el terreno.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:200ms">
+        <div class="tl-dot">🔬</div>
+        <div class="tl-content"><div class="tl-phase">Fase 3</div><h4>Análisis de la tierra</h4><p>Con apoyo de la Brigada Rural de Desarrollo Texcoco, se analizó la calidad del suelo para determinar su viabilidad.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:300ms">
+        <div class="tl-dot">⛏️</div>
+        <div class="tl-content"><div class="tl-phase">Fase 4</div><h4>Remoción del suelo</h4><p>Se preparó la tierra removiéndola para facilitar el crecimiento de raíces y la absorción de nutrientes.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:400ms">
+        <div class="tl-dot">🌾</div>
+        <div class="tl-content"><div class="tl-phase">Fase 5</div><h4>Aplicación de abono orgánico</h4><p>Se mejoró la calidad de la tierra con abono orgánico, convirtiendo las condiciones del suelo en una oportunidad de aprendizaje.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:500ms">
+        <div class="tl-dot">📐</div>
+        <div class="tl-content"><div class="tl-phase">Fase 6</div><h4>Delimitación de camas de cultivo</h4><p>Cada grupo recibió su espacio. Los alumnos midieron, calcularon áreas y distribuyeron las camas — matemáticas en acción.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:600ms">
+        <div class="tl-dot">🌱</div>
+        <div class="tl-content"><div class="tl-phase">Fase 7</div><h4>Siembra</h4><p>El momento que todos esperaban: alumnos, padres y docentes sembraron juntos los primeros cultivos.</p></div>
+      </div>
+      <div class="tl-item rv" style="transition-delay:700ms">
+        <div class="tl-dot">💧</div>
+        <div class="tl-content"><div class="tl-phase">Fase 8</div><h4>Seguimiento y cuidado</h4><p>Riego, observación, registro de crecimiento y diarios de campo. El huerto se convirtió en un laboratorio vivo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--sand-warm)"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 720,80 1080,30 C1260,10 1380,50 1440,40 L1440,80 L0,80Z" fill="var(--sand)"/></svg></div>
+
+<!-- ═══ APRENDIZAJES ═══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-title rv"><h2>📚 Lo que el huerto nos enseñó</h2><span class="accent"></span><p>6 áreas de aprendizaje integradas en un solo proyecto</p></div>
+    <div class="learn-grid">
+      <div class="learn-card rv" style="transition-delay:0ms"><span class="emoji">✏️</span><h4>Lectura y Escritura</h4><p>Registros de crecimiento, diarios de campo, carteles informativos y descripciones que fortalecen la comunicación escrita.</p></div>
+      <div class="learn-card rv" style="transition-delay:100ms"><span class="emoji">🔢</span><h4>Pensamiento Matemático</h4><p>Medición de espacios, conteo de semillas, registro numérico del crecimiento y resolución de problemas reales.</p></div>
+      <div class="learn-card rv" style="transition-delay:200ms"><span class="emoji">🔬</span><h4>Pensamiento Científico</h4><p>Observación, formulación de hipótesis y análisis de resultados al monitorear el desarrollo de los cultivos.</p></div>
+      <div class="learn-card rv" style="transition-delay:300ms"><span class="emoji">🌍</span><h4>Educación Ambiental</h4><p>Conciencia sobre el cuidado del medio ambiente, uso responsable de recursos naturales y sustentabilidad.</p></div>
+      <div class="learn-card rv" style="transition-delay:400ms"><span class="emoji">🥗</span><h4>Vida Saludable</h4><p>Consumo de alimentos naturales, comprensión de su origen y fomento de hábitos alimenticios saludables.</p></div>
+      <div class="learn-card rv" style="transition-delay:500ms"><span class="emoji">🤝</span><h4>Comunidad</h4><p>Impacto significativo en la relación escuela-familia, incrementando la participación y el sentido de pertenencia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--sand)"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,55 C480,5 960,75 1440,25 L1440,80 L0,80Z" fill="var(--sage-dark)"/></svg></div>
+
+<!-- ═══ DESAFÍOS ═══ -->
+<section class="sec sec-green">
+  <div class="container">
+    <div class="sec-title rv"><h2>💪 Desafíos y cómo los resolvimos</h2><span class="accent"></span></div>
+    <div class="challenge-grid">
+      <div class="ch-card rv" style="transition-delay:0ms"><span class="emoji">⏰</span><h4>Tiempo de los padres</h4><p>Las familias tenían horarios complicados por compromisos laborales y personales.</p><div class="solution">✅ Se calendarizó la participación: miércoles de 9:00 a 11:00 h.</div></div>
+      <div class="ch-card rv" style="transition-delay:130ms"><span class="emoji">🌿</span><h4>Desconocimiento técnico</h4><p>Alumnos y familias no tenían experiencia previa en técnicas de cultivo.</p><div class="solution">✅ Acompañamiento de especialista de la Brigada Rural de Desarrollo Texcoco.</div></div>
+      <div class="ch-card rv" style="transition-delay:260ms"><span class="emoji">🪨</span><h4>Condiciones del suelo</h4><p>La tierra no estaba en condiciones óptimas para el cultivo directo.</p><div class="solution">✅ Se realizaron adecuaciones con abono orgánico — convertido en oportunidad de aprendizaje.</div></div>
+      <div class="ch-card rv" style="transition-delay:390ms"><span class="emoji">📏</span><h4>Organización de espacios</h4><p>Distribuir áreas dentro de la escuela para 7 huertos fue un reto logístico.</p><div class="solution">✅ Acuerdos colegiados en el Consejo Técnico Escolar.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--sage-dark)"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,30 C360,80 720,10 1080,60 L1440,40 L1440,80 L0,80Z" fill="var(--sand-warm)"/></svg></div>
+
+<!-- ═══ GALERÍA PLACEHOLDER ═══ -->
+<section class="sec sec-warm">
+  <div class="container">
+    <div class="sec-title rv"><h2>📷 El huerto en imágenes</h2><span class="accent"></span><p>Cada foto cuenta una historia de esfuerzo y aprendizaje</p></div>
+    <div class="gallery-grid rv-scale">
+      <div class="gallery-item">📸</div>
+      <div class="gallery-item">🌱</div>
+      <div class="gallery-item">👨‍👩‍👧‍👦</div>
+      <div class="gallery-item">🌻</div>
+      <div class="gallery-item">📝</div>
+      <div class="gallery-item">🤝</div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--sand-warm)"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,50 C400,0 800,90 1440,35 L1440,80 L0,80Z" fill="var(--sand)"/></svg></div>
+
+<!-- ═══ PROYECCIÓN A FUTURO ═══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-title rv"><h2>🚀 Lo que viene</h2><span class="accent"></span><p>El Huerto Escolar no es una actividad temporal — es una práctica educativa permanente</p></div>
+    <div class="future-grid">
+      <div class="future-card rv" style="transition-delay:0ms"><span class="emoji">🌾</span><h4>Ampliación de cultivos</h4></div>
+      <div class="future-card rv" style="transition-delay:100ms"><span class="emoji">♻️</span><h4>Compostaje y reciclaje</h4></div>
+      <div class="future-card rv" style="transition-delay:200ms"><span class="emoji">🎪</span><h4>Ferias escolares de resultados</h4></div>
+      <div class="future-card rv" style="transition-delay:300ms"><span class="emoji">📐</span><h4>Nuevos contenidos curriculares</h4></div>
+      <div class="future-card rv" style="transition-delay:400ms"><span class="emoji">🔗</span><h4>Trabajo interdisciplinario</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VIDEO / REEL ═══ -->
+<!-- INSTRUCCIONES: Reemplaza .reel-placeholder con un iframe de YouTube o un <video> tag -->
+<section class="reel-section rv">
+  <div class="container">
+    <h2 class="reel-title">🎬 Nuestro huerto en acción</h2>
+    <p class="reel-sub">Un vistazo al proceso que transformó nuestra escuela</p>
+    <div class="reel-placeholder">
+      <span class="big-emoji">🎥</span>
+      <span>Video / Reel — próximamente</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="page-footer">
+  <div class="container">
+    <p><a href="index.html">← Volver a la página principal</a></p>
+    <p>Escuela Primaria "Miguel Hidalgo" · C.C.T. 15DPR0560I · Los Reyes San Salvador, Texcoco, Estado de México</p>
+    <p style="margin-top:8px;font-size:.78rem;opacity:.6">Diálogos Pedagógicos de la Jornada Ampliada · Ciclo Escolar 2025–2026</p>
+  </div>
+</footer>
+
+<script>
+const isTouch='ontouchstart'in window||navigator.maxTouchPoints>0;
+if(!isTouch){
+  const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+  const canvas=document.getElementById('chalkCanvas'),ctx=canvas.getContext('2d');
+  let mx=0,my=0,rx=0,ry=0,trail=[];
+  canvas.width=innerWidth;canvas.height=innerHeight;
+  addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight});
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';
+    trail.push({x:mx,y:my,life:1});if(trail.length>30)trail.shift();
+  });
+  !function anim(){
+    rx+=(mx-rx)*.15;ry+=(my-ry)*.15;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=0;i<trail.length;i++){
+      const p=trail[i];p.life-=.035;
+      if(p.life<=0){trail.splice(i,1);i--;continue}
+      ctx.beginPath();ctx.arc(p.x,p.y,2+p.life*3,0,Math.PI*2);
+      ctx.fillStyle=`rgba(76,175,80,${p.life*.3})`;ctx.fill();
+      if(Math.random()>.6){ctx.beginPath();ctx.arc(p.x+(Math.random()-.5)*12,p.y+(Math.random()-.5)*12,1,0,Math.PI*2);ctx.fillStyle=`rgba(253,216,53,${p.life*.2})`;ctx.fill()}
+    }
+    requestAnimationFrame(anim);
+  }();
+  document.querySelectorAll('a,button,.stat-card,.tl-content,.learn-card,.ch-card,.gallery-item,.future-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+  });
+}
+addEventListener('scroll',()=>{document.getElementById('backNav').classList.toggle('scrolled',scrollY>60)},{passive:true});
+document.querySelectorAll('.rv,.rv-scale').forEach(el=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'}).observe(el));
+addEventListener('scroll',()=>{const s=scrollY;document.querySelectorAll('.leaf-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(.02+i*.01)}px)`})},{passive:true});
+</script>
+</body>
+</html>
