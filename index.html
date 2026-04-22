@@ -178,6 +178,22 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
   color:rgba(255,255,255,.3);font-family:'Baloo 2',cursive;font-size:1.2rem;
 }
 
+
+/* ═══ PANORAMIC PHOTO SECTION ═══ */
+.panoramic-section{
+  position:relative;width:100%;
+  height:50vh;min-height:300px;max-height:480px;
+  overflow:hidden;margin-top:-2px;
+}
+.panoramic-section img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+}
+.panoramic-section .pan-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,var(--navy) 0%,transparent 20%,transparent 75%,var(--navy) 100%);
+  pointer-events:none;z-index:1;
+}
 .wave{position:relative;width:100%;overflow:hidden;line-height:0}.wave svg{display:block;width:100%;height:auto}
 .sec{padding:90px 0}.sec-sand{background:var(--sand)}.sec-warm{background:var(--sand-warm)}.sec-dark{background:var(--navy);color:#fff}
 .sec-title{text-align:center;margin-bottom:56px}
@@ -223,6 +239,17 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 .fw-slide-info{position:absolute;bottom:0;left:0;right:0;padding:40px 48px;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:#fff}
 .sec-sand .fw-slide-info,.sec-warm .fw-slide-info{background:linear-gradient(to top,rgba(27,42,74,.8),transparent)}
 .fw-slide-info h4{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:700}
+/* ── Video slides (eventos) ── */
+.fw-slide-video{background:#000;display:flex;align-items:stretch}
+.fw-slide-video iframe{
+  position:absolute;inset:0;width:100%;height:100%;
+  border:none;
+}
+/* ── Photo slides (instalaciones) ── */
+.fw-slide-photo{
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+}
+
 .fw-slide-info p{font-size:.92rem;opacity:.75;margin-top:6px}
 .fw-controls{position:absolute;bottom:24px;right:48px;display:flex;gap:10px;z-index:5}
 .fw-btn{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(0,0,0,.3);backdrop-filter:blur(8px);color:#fff;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .3s ease}
@@ -361,6 +388,13 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
   <div class="scroll-hint"><div class="scroll-mouse"></div><span>Scroll</span></div>
 </section>
 
+
+<!-- ═══ PANORÁMICA ═══ -->
+<div class="panoramic-section">
+  <img src="media/panoramica.jpg" alt="Vista panorámica de la Escuela Primaria Miguel Hidalgo" loading="lazy">
+  <div class="pan-overlay"></div>
+</div>
+
 <!-- ═══ DRONE VIDEO ═══ -->
 <!-- INSTRUCCIONES: Reemplaza el div.drone-placeholder con un iframe de YouTube.
      Ejemplo: <iframe src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay" allowfullscreen></iframe>
@@ -368,7 +402,12 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <div class="drone-section">
   <div class="drone-overlay"></div>
   <div class="drone-video">
-    <div class="drone-placeholder">🎥 Video aéreo del plantel — próximamente</div>
+    <iframe
+      src="https://www.youtube.com/embed/VIDEO_ID_DRON?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID_DRON&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      title="Video aéreo del plantel">
+    </iframe>
   </div>
 </div>
 
@@ -411,11 +450,22 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 </div>
 <div class="rv-scale" style="position:relative">
   <div class="fw-carousel" id="carEvents">
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">📸</span></div><div class="fw-slide-info"><h4>Próximamente</h4><p>Fotos de eventos escolares</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">🇲🇽</span></div><div class="fw-slide-info"><h4>Ceremonias Cívicas</h4><p>Honores a la bandera y fechas patrias</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">📖</span></div><div class="fw-slide-info"><h4>Actividades Académicas</h4><p>Proyectos y exposiciones</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">🏅</span></div><div class="fw-slide-info"><h4>Eventos Deportivos</h4><p>Competencias y torneos</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">🎨</span></div><div class="fw-slide-info"><h4>Actividades Artísticas</h4><p>Expresión y creatividad</p></div></div>
+    <div class="fw-slide fw-slide-video">
+      <iframe
+        src="https://www.youtube.com/embed/VIDEO_ID_EVENTO_1?autoplay=0&rel=0&modestbranding=1&playsinline=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        title="Eventos y actividades escolares 1">
+      </iframe>
+    </div>
+    <div class="fw-slide fw-slide-video">
+      <iframe
+        src="https://www.youtube.com/embed/VIDEO_ID_EVENTO_2?autoplay=0&rel=0&modestbranding=1&playsinline=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        title="Eventos y actividades escolares 2">
+      </iframe>
+    </div>
   </div>
   <div class="fw-dots" id="dotsEvents"></div>
   <div class="fw-controls"><button class="fw-btn" onclick="slideC('carEvents',-1)" aria-label="Anterior">◀</button><button class="fw-btn" onclick="slideC('carEvents',1)" aria-label="Siguiente">▶</button></div>
@@ -446,11 +496,18 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 </div>
 <div class="rv-scale" style="position:relative">
   <div class="fw-carousel" id="carInst">
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">🏫</span></div><div class="fw-slide-info"><h4>Fotos de la escuela</h4><p>Vista general del plantel</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">📖</span></div><div class="fw-slide-info"><h4>Aulas y Biblioteca</h4><p>Espacios de aprendizaje</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">💻</span></div><div class="fw-slide-info"><h4>Aula de Cómputo</h4><p>Tecnología educativa</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">🍲</span></div><div class="fw-slide-info"><h4>Comedor Escolar</h4><p>Alimentación nutritiva</p></div></div>
-    <div class="fw-slide"><div class="fw-slide-placeholder"><span class="ph-icon">⚽</span></div><div class="fw-slide-info"><h4>Canchas y Áreas Deportivas</h4><p>Actividad física y recreación</p></div></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto1.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto2.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto3.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto4.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto5.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto6.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto7.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto8.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto9.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto10.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto11.jpg')"></div>
+    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto12.jpg')"></div>
   </div>
   <div class="fw-dots" id="dotsInst"></div>
   <div class="fw-controls"><button class="fw-btn" onclick="slideC('carInst',-1)" aria-label="Anterior">◀</button><button class="fw-btn" onclick="slideC('carInst',1)" aria-label="Siguiente">▶</button></div>

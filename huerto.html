@@ -243,13 +243,18 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .gallery-item{
   aspect-ratio:4/3;border-radius:var(--r-sm);overflow:hidden;
-  background:linear-gradient(135deg,var(--sage) 0%,var(--sage-dark) 100%);
-  display:flex;align-items:center;justify-content:center;
-  font-size:2.5rem;opacity:.3;
-  transition:transform .4s ease,opacity .4s ease;
+  background:#c8d9c8;
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
+  cursor:pointer;
 }
-.gallery-item:hover{transform:scale(1.03);opacity:.45}
+.gallery-item img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  display:block;transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.gallery-item:hover{transform:scale(1.03);box-shadow:var(--sh-md)}
+.gallery-item:hover img{transform:scale(1.06)}
 .gallery-item:nth-child(1){grid-row:span 2;aspect-ratio:auto}
+.gallery-item:nth-child(1) img{height:100%}
 
 /* ═══ FUTURE ═══ */
 .future-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
@@ -282,6 +287,15 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
   color:rgba(255,255,255,.3);font-size:1rem;
 }
 .reel-placeholder .big-emoji{font-size:3.5rem;opacity:.5}
+.reel-embed{
+  max-width:800px;margin:0 auto;aspect-ratio:16/9;border-radius:var(--r);
+  overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);
+  position:relative;
+}
+.reel-embed iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:none;
+}
+
 
 /* ═══ CTA / FOOTER ═══ */
 .page-footer{
@@ -469,12 +483,13 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
   <div class="container">
     <div class="sec-title rv"><h2>📷 El huerto en imágenes</h2><span class="accent"></span><p>Cada foto cuenta una historia de esfuerzo y aprendizaje</p></div>
     <div class="gallery-grid rv-scale">
-      <div class="gallery-item">📸</div>
-      <div class="gallery-item">🌱</div>
-      <div class="gallery-item">👨‍👩‍👧‍👦</div>
-      <div class="gallery-item">🌻</div>
-      <div class="gallery-item">📝</div>
-      <div class="gallery-item">🤝</div>
+      <div class="gallery-item"><img src="media/huerto/foto1.jpg" alt="Huerto escolar 1" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto2.jpg" alt="Huerto escolar 2" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto3.jpg" alt="Huerto escolar 3" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto4.jpg" alt="Huerto escolar 4" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto5.jpg" alt="Huerto escolar 5" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto6.jpg" alt="Huerto escolar 6" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto7.jpg" alt="Huerto escolar 7" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -502,9 +517,13 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
   <div class="container">
     <h2 class="reel-title">🎬 Nuestro huerto en acción</h2>
     <p class="reel-sub">Un vistazo al proceso que transformó nuestra escuela</p>
-    <div class="reel-placeholder">
-      <span class="big-emoji">🎥</span>
-      <span>Video / Reel — próximamente</span>
+    <div class="reel-embed">
+      <iframe
+        src="https://www.youtube.com/embed/VIDEO_ID_HUERTO?rel=0&modestbranding=1&playsinline=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        title="Nuestro huerto escolar en acción">
+      </iframe>
     </div>
   </div>
 </section>
