@@ -39,12 +39,11 @@ h1,h2,h3,h4,h5{font-family:'Baloo 2',cursive;line-height:1.2}
 img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-style:none}
 
 /* Cursor */
-.cursor-dot{position:fixed;width:10px;height:10px;background:var(--leaf-dark);border-radius:50%;pointer-events:none;z-index:99999;transition:transform .15s ease,background .3s ease;transform:translate(-50%,-50%)}
-.cursor-ring{position:fixed;width:44px;height:44px;border:2px solid var(--leaf-light);border-radius:50%;pointer-events:none;z-index:99998;transition:transform .08s ease,width .3s ease,height .3s ease,border-color .3s ease;transform:translate(-50%,-50%)}
-#chalkCanvas{position:fixed;inset:0;pointer-events:none;z-index:99997}
-.cursor-hover .cursor-dot{transform:translate(-50%,-50%) scale(2.5);background:var(--sun)}
-.cursor-hover .cursor-ring{width:60px;height:60px;border-color:var(--leaf)}
-@media(hover:none){.cursor-dot,.cursor-ring,#chalkCanvas{display:none!important}body{cursor:auto}}
+.c-dot{position:fixed;top:0;left:0;width:9px;height:9px;background:var(--leaf-dark);border-radius:50%;pointer-events:none;z-index:99999;will-change:transform;transform:translate(-200px,-200px);filter:blur(.4px);transition:width .2s,height .2s,background .2s}
+.c-particle{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:99997;will-change:transform,opacity;opacity:0;animation-duration:.5s;animation-timing-function:ease-out;animation-fill-mode:forwards;animation-name:none}
+@keyframes cPop{0%{opacity:.6;transform:translate(var(--ex),var(--ey)) translate(-50%,-50%)}100%{opacity:0;transform:translate(var(--ex),calc(var(--ey) - 20px)) translate(-50%,-50%) scale(.1)}}
+body.c-hov .c-dot{width:13px;height:13px;background:var(--sun)}
+@media(hover:none){body{cursor:auto}.c-dot,.c-particle{display:none!important}}
 
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .rv{opacity:0;transform:translateY(50px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}.rv.vis{opacity:1;transform:translateY(0)}
@@ -329,9 +328,7 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 </style>
 </head>
 <body>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<canvas id="chalkCanvas"></canvas>
+<div id="cDot" class="c-dot" aria-hidden="true"></div>
 
 <!-- ═══ BACK NAV ═══ -->
 <nav class="back-nav" id="backNav">
@@ -370,7 +367,6 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
       <span class="hero-tag">Jornada Ampliada</span>
     </div>
   </div>
-  <div class="scroll-hint"><div class="scroll-mouse"></div><span>Scroll</span></div>
 </section>
 
 <!-- Wave -->
@@ -387,7 +383,7 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- ═══ CIFRAS CLAVE ═══ -->
 <section class="sec sec-sand">
   <div class="container">
-    <div class="sec-title rv"><h2>🌿 Nuestro Huerto en Números</h2><span class="accent"></span></div>
+    <div class="sec-title rv"><h2><span aria-hidden="true">🌿</span> Nuestro Huerto en Números</h2><span class="accent"></span></div>
     <div class="stats-row">
       <div class="stat-card rv" style="transition-delay:0ms"><div class="stat-num">176</div><div class="stat-label">Estudiantes participantes</div></div>
       <div class="stat-card rv" style="transition-delay:120ms"><div class="stat-num">7</div><div class="stat-label">Huertos — uno por grupo</div></div>
@@ -403,38 +399,38 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- ═══ CRONOLOGÍA ═══ -->
 <section class="sec sec-warm">
   <div class="container">
-    <div class="sec-title rv"><h2>🗓️ Así lo construimos</h2><span class="accent"></span><p>8 fases, un solo objetivo: aprender haciendo</p></div>
+    <div class="sec-title rv"><h2><span aria-hidden="true">🗓️</span> Así lo construimos</h2><span class="accent"></span><p>8 fases, un solo objetivo: aprender haciendo</p></div>
     <div class="timeline">
       <div class="tl-item rv" style="transition-delay:0ms">
-        <div class="tl-dot">📣</div>
+        <div class="tl-dot" aria-hidden="true">📣</div>
         <div class="tl-content"><div class="tl-phase">Fase 1</div><h4>Presentación a padres de familia</h4><p>Se convocó a las familias para presentar el proyecto y promover su participación activa desde el inicio.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:100ms">
-        <div class="tl-dot">🧹</div>
+        <div class="tl-dot" aria-hidden="true">🧹</div>
         <div class="tl-content"><div class="tl-phase">Fase 2</div><h4>Limpieza y deshierbe</h4><p>Padres, alumnos y docentes limpiaron el área destinada al huerto, preparando el terreno.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:200ms">
-        <div class="tl-dot">🔬</div>
+        <div class="tl-dot" aria-hidden="true">🔬</div>
         <div class="tl-content"><div class="tl-phase">Fase 3</div><h4>Análisis de la tierra</h4><p>Con apoyo de la Brigada Rural de Desarrollo Texcoco, se analizó la calidad del suelo para determinar su viabilidad.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:300ms">
-        <div class="tl-dot">⛏️</div>
+        <div class="tl-dot" aria-hidden="true">⛏️</div>
         <div class="tl-content"><div class="tl-phase">Fase 4</div><h4>Remoción del suelo</h4><p>Se preparó la tierra removiéndola para facilitar el crecimiento de raíces y la absorción de nutrientes.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:400ms">
-        <div class="tl-dot">🌾</div>
+        <div class="tl-dot" aria-hidden="true">🌾</div>
         <div class="tl-content"><div class="tl-phase">Fase 5</div><h4>Aplicación de abono orgánico</h4><p>Se mejoró la calidad de la tierra con abono orgánico, convirtiendo las condiciones del suelo en una oportunidad de aprendizaje.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:500ms">
-        <div class="tl-dot">📐</div>
+        <div class="tl-dot" aria-hidden="true">📐</div>
         <div class="tl-content"><div class="tl-phase">Fase 6</div><h4>Delimitación de camas de cultivo</h4><p>Cada grupo recibió su espacio. Los alumnos midieron, calcularon áreas y distribuyeron las camas — matemáticas en acción.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:600ms">
-        <div class="tl-dot">🌱</div>
+        <div class="tl-dot" aria-hidden="true">🌱</div>
         <div class="tl-content"><div class="tl-phase">Fase 7</div><h4>Siembra</h4><p>El momento que todos esperaban: alumnos, padres y docentes sembraron juntos los primeros cultivos.</p></div>
       </div>
       <div class="tl-item rv" style="transition-delay:700ms">
-        <div class="tl-dot">💧</div>
+        <div class="tl-dot" aria-hidden="true">💧</div>
         <div class="tl-content"><div class="tl-phase">Fase 8</div><h4>Seguimiento y cuidado</h4><p>Riego, observación, registro de crecimiento y diarios de campo. El huerto se convirtió en un laboratorio vivo.</p></div>
       </div>
     </div>
@@ -447,14 +443,14 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- ═══ APRENDIZAJES ═══ -->
 <section class="sec sec-sand">
   <div class="container">
-    <div class="sec-title rv"><h2>📚 Lo que el huerto nos enseñó</h2><span class="accent"></span><p>6 áreas de aprendizaje integradas en un solo proyecto</p></div>
+    <div class="sec-title rv"><h2><span aria-hidden="true">📚</span> Lo que el huerto nos enseñó</h2><span class="accent"></span><p>6 áreas de aprendizaje integradas en un solo proyecto</p></div>
     <div class="learn-grid">
-      <div class="learn-card rv" style="transition-delay:0ms"><span class="emoji">✏️</span><h4>Lectura y Escritura</h4><p>Registros de crecimiento, diarios de campo, carteles informativos y descripciones que fortalecen la comunicación escrita.</p></div>
-      <div class="learn-card rv" style="transition-delay:100ms"><span class="emoji">🔢</span><h4>Pensamiento Matemático</h4><p>Medición de espacios, conteo de semillas, registro numérico del crecimiento y resolución de problemas reales.</p></div>
-      <div class="learn-card rv" style="transition-delay:200ms"><span class="emoji">🔬</span><h4>Pensamiento Científico</h4><p>Observación, formulación de hipótesis y análisis de resultados al monitorear el desarrollo de los cultivos.</p></div>
-      <div class="learn-card rv" style="transition-delay:300ms"><span class="emoji">🌍</span><h4>Educación Ambiental</h4><p>Conciencia sobre el cuidado del medio ambiente, uso responsable de recursos naturales y sustentabilidad.</p></div>
-      <div class="learn-card rv" style="transition-delay:400ms"><span class="emoji">🥗</span><h4>Vida Saludable</h4><p>Consumo de alimentos naturales, comprensión de su origen y fomento de hábitos alimenticios saludables.</p></div>
-      <div class="learn-card rv" style="transition-delay:500ms"><span class="emoji">🤝</span><h4>Comunidad</h4><p>Impacto significativo en la relación escuela-familia, incrementando la participación y el sentido de pertenencia.</p></div>
+      <div class="learn-card rv" style="transition-delay:0ms"><span class="emoji" aria-hidden="true">✏️</span><h4>Lectura y Escritura</h4><p>Registros de crecimiento, diarios de campo, carteles informativos y descripciones que fortalecen la comunicación escrita.</p></div>
+      <div class="learn-card rv" style="transition-delay:100ms"><span class="emoji" aria-hidden="true">🔢</span><h4>Pensamiento Matemático</h4><p>Medición de espacios, conteo de semillas, registro numérico del crecimiento y resolución de problemas reales.</p></div>
+      <div class="learn-card rv" style="transition-delay:200ms"><span class="emoji" aria-hidden="true">🔬</span><h4>Pensamiento Científico</h4><p>Observación, formulación de hipótesis y análisis de resultados al monitorear el desarrollo de los cultivos.</p></div>
+      <div class="learn-card rv" style="transition-delay:300ms"><span class="emoji" aria-hidden="true">🌍</span><h4>Educación Ambiental</h4><p>Conciencia sobre el cuidado del medio ambiente, uso responsable de recursos naturales y sustentabilidad.</p></div>
+      <div class="learn-card rv" style="transition-delay:400ms"><span class="emoji" aria-hidden="true">🥗</span><h4>Vida Saludable</h4><p>Consumo de alimentos naturales, comprensión de su origen y fomento de hábitos alimenticios saludables.</p></div>
+      <div class="learn-card rv" style="transition-delay:500ms"><span class="emoji" aria-hidden="true">🤝</span><h4>Comunidad</h4><p>Impacto significativo en la relación escuela-familia, incrementando la participación y el sentido de pertenencia.</p></div>
     </div>
   </div>
 </section>
@@ -465,12 +461,12 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- ═══ DESAFÍOS ═══ -->
 <section class="sec sec-green">
   <div class="container">
-    <div class="sec-title rv"><h2>💪 Desafíos y cómo los resolvimos</h2><span class="accent"></span></div>
+    <div class="sec-title rv"><h2><span aria-hidden="true">💪</span> Desafíos y cómo los resolvimos</h2><span class="accent"></span></div>
     <div class="challenge-grid">
-      <div class="ch-card rv" style="transition-delay:0ms"><span class="emoji">⏰</span><h4>Tiempo de los padres</h4><p>Las familias tenían horarios complicados por compromisos laborales y personales.</p><div class="solution">✅ Se calendarizó la participación: miércoles de 9:00 a 11:00 h.</div></div>
-      <div class="ch-card rv" style="transition-delay:130ms"><span class="emoji">🌿</span><h4>Desconocimiento técnico</h4><p>Alumnos y familias no tenían experiencia previa en técnicas de cultivo.</p><div class="solution">✅ Acompañamiento de especialista de la Brigada Rural de Desarrollo Texcoco.</div></div>
-      <div class="ch-card rv" style="transition-delay:260ms"><span class="emoji">🪨</span><h4>Condiciones del suelo</h4><p>La tierra no estaba en condiciones óptimas para el cultivo directo.</p><div class="solution">✅ Se realizaron adecuaciones con abono orgánico — convertido en oportunidad de aprendizaje.</div></div>
-      <div class="ch-card rv" style="transition-delay:390ms"><span class="emoji">📏</span><h4>Organización de espacios</h4><p>Distribuir áreas dentro de la escuela para 7 huertos fue un reto logístico.</p><div class="solution">✅ Acuerdos colegiados en el Consejo Técnico Escolar.</div></div>
+      <div class="ch-card rv" style="transition-delay:0ms"><span class="emoji" aria-hidden="true">⏰</span><h4>Tiempo de los padres</h4><p>Las familias tenían horarios complicados por compromisos laborales y personales.</p><div class="solution">✅ Se calendarizó la participación: miércoles de 9:00 a 11:00 h.</div></div>
+      <div class="ch-card rv" style="transition-delay:130ms"><span class="emoji" aria-hidden="true">🌿</span><h4>Desconocimiento técnico</h4><p>Alumnos y familias no tenían experiencia previa en técnicas de cultivo.</p><div class="solution">✅ Acompañamiento de especialista de la Brigada Rural de Desarrollo Texcoco.</div></div>
+      <div class="ch-card rv" style="transition-delay:260ms"><span class="emoji" aria-hidden="true">🪨</span><h4>Condiciones del suelo</h4><p>La tierra no estaba en condiciones óptimas para el cultivo directo.</p><div class="solution">✅ Se realizaron adecuaciones con abono orgánico — convertido en oportunidad de aprendizaje.</div></div>
+      <div class="ch-card rv" style="transition-delay:390ms"><span class="emoji" aria-hidden="true">📏</span><h4>Organización de espacios</h4><p>Distribuir áreas dentro de la escuela para 7 huertos fue un reto logístico.</p><div class="solution">✅ Acuerdos colegiados en el Consejo Técnico Escolar.</div></div>
     </div>
   </div>
 </section>
@@ -481,7 +477,7 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- ═══ GALERÍA PLACEHOLDER ═══ -->
 <section class="sec sec-warm">
   <div class="container">
-    <div class="sec-title rv"><h2>📷 El huerto en imágenes</h2><span class="accent"></span><p>Cada foto cuenta una historia de esfuerzo y aprendizaje</p></div>
+    <div class="sec-title rv"><h2><span aria-hidden="true">📷</span> El huerto en imágenes</h2><span class="accent"></span><p>Cada foto cuenta una historia de esfuerzo y aprendizaje</p></div>
     <div class="gallery-grid rv-scale">
       <div class="gallery-item"><img src="media/huerto/foto1.jpg" alt="Huerto escolar 1" loading="lazy"></div>
       <div class="gallery-item"><img src="media/huerto/foto2.jpg" alt="Huerto escolar 2" loading="lazy"></div>
@@ -500,13 +496,13 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- ═══ PROYECCIÓN A FUTURO ═══ -->
 <section class="sec sec-sand">
   <div class="container">
-    <div class="sec-title rv"><h2>🚀 Lo que viene</h2><span class="accent"></span><p>El Huerto Escolar no es una actividad temporal — es una práctica educativa permanente</p></div>
+    <div class="sec-title rv"><h2><span aria-hidden="true">🚀</span> Lo que viene</h2><span class="accent"></span><p>El Huerto Escolar no es una actividad temporal — es una práctica educativa permanente</p></div>
     <div class="future-grid">
-      <div class="future-card rv" style="transition-delay:0ms"><span class="emoji">🌾</span><h4>Ampliación de cultivos</h4></div>
-      <div class="future-card rv" style="transition-delay:100ms"><span class="emoji">♻️</span><h4>Compostaje y reciclaje</h4></div>
-      <div class="future-card rv" style="transition-delay:200ms"><span class="emoji">🎪</span><h4>Ferias escolares de resultados</h4></div>
-      <div class="future-card rv" style="transition-delay:300ms"><span class="emoji">📐</span><h4>Nuevos contenidos curriculares</h4></div>
-      <div class="future-card rv" style="transition-delay:400ms"><span class="emoji">🔗</span><h4>Trabajo interdisciplinario</h4></div>
+      <div class="future-card rv" style="transition-delay:0ms"><span class="emoji" aria-hidden="true">🌾</span><h4>Ampliación de cultivos</h4></div>
+      <div class="future-card rv" style="transition-delay:100ms"><span class="emoji" aria-hidden="true">♻️</span><h4>Compostaje y reciclaje</h4></div>
+      <div class="future-card rv" style="transition-delay:200ms"><span class="emoji" aria-hidden="true">🎪</span><h4>Ferias escolares de resultados</h4></div>
+      <div class="future-card rv" style="transition-delay:300ms"><span class="emoji" aria-hidden="true">📐</span><h4>Nuevos contenidos curriculares</h4></div>
+      <div class="future-card rv" style="transition-delay:400ms"><span class="emoji" aria-hidden="true">🔗</span><h4>Trabajo interdisciplinario</h4></div>
     </div>
   </div>
 </section>
@@ -515,7 +511,7 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 <!-- INSTRUCCIONES: Reemplaza .reel-placeholder con un iframe de YouTube o un <video> tag -->
 <section class="reel-section rv">
   <div class="container">
-    <h2 class="reel-title">🎬 Nuestro huerto en acción</h2>
+    <h2 class="reel-title"><span aria-hidden="true">🎬</span> Nuestro huerto en acción</h2>
     <p class="reel-sub">Un vistazo al proceso que transformó nuestra escuela</p>
     <div class="reel-embed">
       <iframe
@@ -538,36 +534,38 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 </footer>
 
 <script>
-const isTouch='ontouchstart'in window||navigator.maxTouchPoints>0;
-if(!isTouch){
-  const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
-  const canvas=document.getElementById('chalkCanvas'),ctx=canvas.getContext('2d');
-  let mx=0,my=0,rx=0,ry=0,trail=[];
-  canvas.width=innerWidth;canvas.height=innerHeight;
-  addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight});
+// Cursor — dot + partículas (tema verde)
+(function(){
+  if('ontouchstart'in window||navigator.maxTouchPoints>0)return;
+  const dot=document.getElementById('cDot');
+  const POOL=12,pool=[];
+  for(let i=0;i<POOL;i++){const p=document.createElement('div');p.className='c-particle';document.body.appendChild(p);pool.push({el:p,free:true})}
+  let lastEmit=0;
+  const DOT_H=4.5;
   document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    dot.style.left=mx+'px';dot.style.top=my+'px';
-    trail.push({x:mx,y:my,life:1});if(trail.length>30)trail.shift();
+    const mx=e.clientX,my=e.clientY;
+    dot.style.transform=`translate(${mx-DOT_H}px,${my-DOT_H}px)`;
+    const now=performance.now();
+    if(now-lastEmit>85){emit(mx,my);lastEmit=now}
+  },{passive:true});
+  function emit(x,y){
+    const p=pool.find(p=>p.free);if(!p)return;
+    p.free=false;
+    const size=3+Math.random()*4;
+    const color=Math.random()>.4?'var(--leaf)':'var(--sun)';
+    const shape=Math.random()>.5?'50%':'2px';
+    p.el.style.cssText=`width:${size}px;height:${size}px;background:${color};border-radius:${shape}`;
+    p.el.style.setProperty('--ex',(x+(Math.random()-.5)*16)+'px');
+    p.el.style.setProperty('--ey',y+'px');
+    p.el.style.animationName='none';
+    void p.el.offsetWidth;
+    p.el.style.animationName='cPop';
+    setTimeout(()=>{p.free=true},520);
+  }
+  document.addEventListener('mouseover',e=>{
+    document.body.classList.toggle('c-hov',!!e.target.closest('a,button,.stat-card,.tl-content,.learn-card,.ch-card,.gallery-item,.future-card'));
   });
-  !function anim(){
-    rx+=(mx-rx)*.15;ry+=(my-ry)*.15;
-    ring.style.left=rx+'px';ring.style.top=ry+'px';
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(let i=0;i<trail.length;i++){
-      const p=trail[i];p.life-=.035;
-      if(p.life<=0){trail.splice(i,1);i--;continue}
-      ctx.beginPath();ctx.arc(p.x,p.y,2+p.life*3,0,Math.PI*2);
-      ctx.fillStyle=`rgba(76,175,80,${p.life*.3})`;ctx.fill();
-      if(Math.random()>.6){ctx.beginPath();ctx.arc(p.x+(Math.random()-.5)*12,p.y+(Math.random()-.5)*12,1,0,Math.PI*2);ctx.fillStyle=`rgba(253,216,53,${p.life*.2})`;ctx.fill()}
-    }
-    requestAnimationFrame(anim);
-  }();
-  document.querySelectorAll('a,button,.stat-card,.tl-content,.learn-card,.ch-card,.gallery-item,.future-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
-  });
-}
+})();
 addEventListener('scroll',()=>{document.getElementById('backNav').classList.toggle('scrolled',scrollY>60)},{passive:true});
 document.querySelectorAll('.rv,.rv-scale').forEach(el=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'}).observe(el));
 addEventListener('scroll',()=>{const s=scrollY;document.querySelectorAll('.leaf-shape').forEach((sh,i)=>{sh.style.transform=`translateY(${s*(.02+i*.01)}px)`})},{passive:true});
