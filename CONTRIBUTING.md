@@ -135,6 +135,24 @@ Lo mismo aplica para el video del huerto en `huerto.html` (buscar `reel-embed`).
 
 ---
 
+## Actualizar Inscripciones y Útiles (`inscripciones-2026-2027.html`)
+
+Esta página es **temporal** — vive fuera de `index.html` a propósito, para que cada ciclo escolar se pueda reemplazar sin tocar la página principal.
+
+**Cada ciclo nuevo (ej. cuando llegue 2027–2028):**
+1. Crear el archivo nuevo (ej. `inscripciones-2027-2028.html`) copiando la estructura del actual.
+2. Subir las imágenes/PDFs nuevos a `media/Inscripciones-2027-2028/`.
+3. En `index.html`, actualizar los 3 links que apuntan a la página del ciclo anterior: la insignia clicable del hero (`.campaign-badge`), el botón dentro de la tarjeta `.campaign-cta` en `#inscripcion`, y el `<title>`/badge del ciclo si cambió.
+4. Decidir si la página del ciclo anterior se borra o se deja archivada (sin enlazar desde ningún lado).
+
+**Dentro del mismo ciclo** (agregar un documento nuevo, corregir una imagen, etc.):
+- Las imágenes de requisitos/útiles y los PDFs viven todos en `media/Inscripciones-2026-2027/`.
+- Cada imagen en la página tiene su propio bloque `.doc-image-card` con botones Ver/Descargar/Imprimir — copiar un bloque existente como plantilla.
+- El botón "Imprimir" usa `onclick="printImage('ruta/a/la/imagen.jpg','Título para la pestaña')"` — no requiere tocar CSS de impresión.
+- Las pestañas de útiles por grado usan el mismo patrón `showUtiles('1A')` / `id="utiles-1A"` que documenta la sección de carrusel de este archivo — agregar un botón + un panel nuevo para un grupo nuevo.
+
+---
+
 ## Agregar una nueva sección
 
 1. Agregar el link en el nav desktop (buscar `<nav class="nav-links">`):

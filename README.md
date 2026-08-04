@@ -227,7 +227,7 @@ La función `printImage(src, title)` (al final del `<script>`) abre la imagen so
 
 | ID | Clase CSS | Contenido |
 |---|---|---|
-| *(hero)* | `.hero` | H1, badge ciclo, estadísticas, CTA → `#inscripcion` |
+| *(hero)* | `.hero` | H1, badge ciclo, insignia clicable → `inscripciones-2026-2027.html`, estadísticas, CTA → `#inscripcion` |
 | *(panorámica)* | `.panoramic-section` | `media/panoramica.jpg` |
 | *(drone video)* | `.drone-section` | iframe YouTube embebido |
 | `#nosotros` | `.sec-sand` | Cards de identidad (Misión, Visión, Valores, Compromiso) + pills de valores |
@@ -326,7 +326,6 @@ git push
 | Media | Links a redes sociales en footer |
 | Baja | Reemplazar emojis en cards de identidad (`#nosotros`) con SVGs |
 | Baja | Reemplazar emojis en cards de maestros con fotos reales |
-| Baja | Alt texts descriptivos en galería de `huerto.html` (actualmente genéricos) |
 | Baja | Captions de fotos en carrusel de eventos (`#carEvents`) |
 
 ---
