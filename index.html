@@ -141,7 +141,10 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 .hero h1{color:#fff;font-size:clamp(1.7rem,4.5vw,3rem);font-weight:800;margin-bottom:14px;animation:fadeUp .8s .5s both}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--amber),var(--terracotta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{color:rgba(255,255,255,.7);font-size:clamp(1rem,2.3vw,1.2rem);font-weight:500;max-width:580px;margin:0 auto 22px;animation:fadeUp .8s .7s both}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--rust),var(--terracotta));color:#fff;font-family:'Baloo 2',cursive;font-weight:700;font-size:.92rem;padding:10px 28px;border-radius:50px;margin-bottom:40px;animation:fadeUp .8s .9s both;box-shadow:0 8px 25px rgba(192,57,43,.3)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--rust),var(--terracotta));color:#fff;font-family:'Baloo 2',cursive;font-weight:700;font-size:.92rem;padding:10px 28px;border-radius:50px;margin-bottom:22px;animation:fadeUp .8s .9s both;box-shadow:0 8px 25px rgba(192,57,43,.3)}
+.campaign-badge{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--amber),var(--rust));color:#fff;font-family:'Baloo 2',cursive;font-weight:700;font-size:.9rem;padding:12px 30px;border-radius:50px;margin-bottom:40px;box-shadow:0 8px 25px rgba(192,57,43,.35);transition:transform .3s ease,box-shadow .3s ease;animation:fadeUp .8s 1s both,campaignPulse 2.4s ease-in-out 1.8s infinite}
+.campaign-badge:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 34px rgba(192,57,43,.45)}
+@keyframes campaignPulse{0%,100%{box-shadow:0 8px 25px rgba(192,57,43,.35)}50%{box-shadow:0 8px 32px rgba(232,168,56,.55)}}
 .hero-stats{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;animation:fadeUp .8s 1.1s both}
 .hero-stat{text-align:center;position:relative}
 .hero-stat::after{content:'';position:absolute;right:-24px;top:50%;transform:translateY(-50%);width:1px;height:36px;background:rgba(255,255,255,.15)}
@@ -276,6 +279,26 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 .doc-list li{display:flex;align-items:flex-start;gap:10px;font-size:.875rem;color:#444;line-height:1.55}
 .doc-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:5px}
 .enroll-note{background:rgba(27,42,74,.04);border-left:3px solid var(--amber);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:13px 18px;font-size:.85rem;color:#555;line-height:1.65;margin-bottom:32px}
+
+/* ═══ PANEL DE CAMPAÑA — Inscripciones 2026–2027 ═══ */
+.campaign-panel{background:#fff;border-radius:var(--r);box-shadow:var(--sh-lg);margin-bottom:64px;overflow:hidden;border:1px solid rgba(192,57,43,.1)}
+.campaign-panel-head{background:linear-gradient(135deg,var(--rust),var(--terracotta) 55%,var(--amber));padding:40px 40px 34px;text-align:center}
+.campaign-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.2);color:#fff;font-family:'Baloo 2',cursive;font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;padding:8px 20px;border-radius:50px;margin-bottom:16px}
+.campaign-panel-head h3{color:#fff;font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:800;margin-bottom:8px}
+.campaign-panel-head p{color:rgba(255,255,255,.92);font-size:.95rem;max-width:520px;margin:0 auto}
+.campaign-panel-body{padding:40px}
+.slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px}
+.slot-card{background:var(--sand);border-radius:var(--r-sm);padding:28px 26px;border-top:5px solid var(--sky)}
+.slot-card.slot-current{border-top-color:var(--sage)}
+.slot-card.slot-new{border-top-color:var(--amber)}
+.slot-card .slot-ic{font-size:1.8rem;display:block;margin-bottom:10px}
+.slot-card .slot-time{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.6rem;background:linear-gradient(135deg,var(--rust),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.slot-card h4{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:10px}
+.slot-card p{font-size:.87rem;color:#555;line-height:1.65}
+.campaign-note{font-size:.88rem;color:#555;line-height:1.7;text-align:center;max-width:640px;margin:0 auto 28px}
+.btn-campaign{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--rust),var(--amber));color:#fff;font-family:'Baloo 2',cursive;font-weight:700;font-size:.92rem;padding:14px 30px;border-radius:50px;box-shadow:0 8px 22px rgba(192,57,43,.3);transition:all .3s ease}
+.btn-campaign:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(192,57,43,.4)}
+@media(max-width:640px){.slot-grid{grid-template-columns:1fr}.campaign-panel-head{padding:32px 24px 28px}.campaign-panel-body{padding:28px 22px}}
 
 /* ═══ SECCIÓN ÚTILES ESCOLARES ═══ */
 .utiles-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px}
@@ -412,6 +435,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
     <h1>Escuela Primaria <em>"Miguel Hidalgo"</em></h1>
     <p class="hero-sub">Educación integral, humanista e incluyente en horario extendido</p>
     <div class="hero-badge"><span aria-hidden="true">📚</span> Ciclo Escolar 2026–2027</div>
+    <a href="#campana-2026-2027" class="campaign-badge"><span aria-hidden="true">🎉</span> Inscripciones y Útiles · Ciclo 2026–2027</a>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num">08:00–16:00 h</div><div class="hero-stat-label">Horario</div></div>
       <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Grupos</div></div>
@@ -574,6 +598,132 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 </div></section>
 
 <section class="sec sec-sand" id="inscripcion"><div class="container">
+
+  <div class="campaign-panel rv-scale" id="campana-2026-2027">
+    <div class="campaign-panel-head">
+      <div class="campaign-eyebrow"><span aria-hidden="true">🎉</span> Ciclo Escolar 2026–2027</div>
+      <h3>¡Aparta el lugar de tu hija o hijo!</h3>
+      <p>Inscripciones iniciales del nuevo ciclo escolar — fecha, requisitos y horarios, en un solo lugar.</p>
+    </div>
+    <div class="campaign-panel-body">
+
+      <div class="slot-grid">
+        <div class="slot-card slot-current">
+          <span class="slot-ic" aria-hidden="true">🏫</span>
+          <div class="slot-time">08:00 – 12:00 h</div>
+          <h4>Alumnas y alumnos que ya estudian en nuestra escuela</h4>
+          <p>Con cariño para las familias que ya son parte de nuestra comunidad: este es tu horario para reinscribir a tu hija o hijo. Te pedimos puntualidad — el <strong>viernes 28 de agosto es el único día</strong> para hacerlo. Si no logran presentarse en este horario, con todo respeto entenderemos que el lugar queda disponible y podría asignarse a otra familia en espera.</p>
+        </div>
+        <div class="slot-card slot-new">
+          <span class="slot-ic" aria-hidden="true">🆕</span>
+          <div class="slot-time">12:30 – 14:30 h</div>
+          <h4>Alumnas y alumnos que vienen de otra escuela</h4>
+          <p>En este horario damos la bienvenida a las familias que se inscriben por primera vez con nosotros, una vez confirmados los lugares disponibles del ciclo.</p>
+        </div>
+      </div>
+      <p class="campaign-note">Esta organización nos permite dar prioridad a quienes ya confían en nuestra escuela, sin dejar de abrir con claridad los espacios disponibles a las nuevas familias que quieren unirse a nuestra comunidad. Gracias por su comprensión. 💙</p>
+      <p class="enroll-note" style="border-left-color:var(--rust);background:rgba(192,57,43,.05)">Las inscripciones a <strong>1.er grado</strong> se realizan únicamente conforme al listado oficial SAID y a la disponibilidad de lugares (no aplica la distinción de horario anterior, ya que todo ingreso a 1.° es nuevo en el sistema).</p>
+
+      <div class="doc-grid">
+        <div class="doc-block">
+          <div class="doc-block-title">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Documentación requerida
+          </div>
+          <ul class="doc-list">
+            <li><span class="doc-dot"></span>Ficha de inscripción (original, llenada con tinta azul) — la proporciona la escuela</li>
+            <li><span class="doc-dot"></span>Acta de nacimiento certificada</li>
+            <li><span class="doc-dot"></span>CURP actualizada del alumno (agosto 2026)</li>
+            <li><span class="doc-dot"></span>Copia del certificado médico, especificando si el alumno puede realizar actividad física</li>
+            <li><span class="doc-dot"></span>En caso de algún padecimiento, anexar diagnóstico o constancia médica</li>
+            <li><span class="doc-dot"></span>Comprobante de domicilio, con croquis del trayecto de la casa a la escuela al reverso</li>
+            <li><span class="doc-dot"></span>INE del padre, madre o tutor (ampliación al 200%)</li>
+            <li><span class="doc-dot"></span>CURP actualizada del padre, madre o tutor (agosto 2026)</li>
+            <li><span class="doc-dot"></span>Carta responsiva de entrada y salida, firmada con tinta azul, con dos teléfonos de contacto para emergencias</li>
+            <li><span class="doc-dot"></span>Ficha de Beneficiario DIF</li>
+          </ul>
+        </div>
+        <div class="doc-block">
+          <div class="doc-block-title">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Boletas según el grado al que ingresa
+          </div>
+          <ul class="doc-list">
+            <li><span class="doc-dot"></span><strong>1.° grado:</strong> copia de Preinscripción SAID y copia de Boleta de Preescolar</li>
+            <li><span class="doc-dot"></span><strong>2.° grado:</strong> copia de Boleta de 1.° grado</li>
+            <li><span class="doc-dot"></span><strong>3.° grado:</strong> copia de Boleta de 2.° grado</li>
+            <li><span class="doc-dot"></span><strong>4.° grado:</strong> copia de Boleta de 3.° grado</li>
+            <li><span class="doc-dot"></span><strong>5.° grado:</strong> copias de las boletas de 1.° a 4.° grado</li>
+            <li><span class="doc-dot"></span><strong>6.° grado:</strong> copias de las boletas de 1.° a 5.° grado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="doc-grid doc-grid-3">
+        <div class="doc-block">
+          <div class="doc-block-title">1. Expediente escolar</div>
+          <ul class="doc-list">
+            <li><span class="doc-dot"></span>Ficha de inscripción (original)</li>
+            <li><span class="doc-dot"></span>Acta de nacimiento certificada (2 copias)</li>
+            <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
+            <li><span class="doc-dot"></span>Certificado médico y, en su caso, diagnóstico (1 copia)</li>
+            <li><span class="doc-dot"></span>Comprobante de domicilio con croquis (2 copias)</li>
+            <li><span class="doc-dot"></span>INE del padre, madre o tutor al 200% (2 copias)</li>
+            <li><span class="doc-dot"></span>CURP de padre, madre o tutor (2 copias)</li>
+            <li><span class="doc-dot"></span>Carta responsiva (original)</li>
+          </ul>
+        </div>
+        <div class="doc-block">
+          <div class="doc-block-title">2. Expediente de alimentación (DIF)</div>
+          <ul class="doc-list">
+            <li><span class="doc-dot"></span>Ficha de Beneficiario DIF, ambos lados, tinta azul (original)</li>
+            <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
+          </ul>
+        </div>
+        <div class="doc-block">
+          <div class="doc-block-title">3. Programa de calzado (Tenis DIF)</div>
+          <ul class="doc-list">
+            <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
+            <li><span class="doc-dot"></span>INE del padre, madre o tutor al 200% (1 copia)</li>
+            <li><span class="doc-dot"></span>Indicar el número de calzado del alumno</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="data-grid">
+        <div class="data-block">
+          <h3><span aria-hidden="true">🤝</span> Aportación voluntaria</h3>
+          <div class="data-row"><span class="lbl">Monto</span><span class="val-d">$600.00</span></div>
+          <div class="data-note"><span aria-hidden="true">ℹ️</span><span>Es voluntaria y será administrada por la Mesa Directiva de Padres de Familia, para fortalecer las condiciones de la escuela.</span></div>
+        </div>
+        <div class="data-block">
+          <h3><span aria-hidden="true">🪪</span> Credencial escolar</h3>
+          <div class="data-row"><span class="lbl">Costo</span><span class="val-d">$50.00</span></div>
+          <div class="data-note"><span aria-hidden="true">ℹ️</span><span>Corresponde a la credencial escolar institucional del alumno.</span></div>
+        </div>
+      </div>
+
+      <div class="enroll-actions">
+        <a href="media/Inscripciones-2026-2027/requisitos-inscripcion.jpg" download class="btn-enroll btn-enroll-secondary">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+          Guardar imagen de requisitos
+        </a>
+        <a href="media/Inscripciones-2026-2027/informacion-adicional.jpg" download class="btn-enroll btn-enroll-secondary">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+          Guardar información adicional
+        </a>
+      </div>
+
+      <div class="enroll-actions" style="margin-top:6px">
+        <a href="#utiles" class="btn-campaign">
+          ¿Ya la inscribiste? Consulta la lista de útiles de su grado
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
   <div class="sec-title rv"><h2>¿Cómo inscribirse?</h2><span class="accent"></span><p>El proceso es sencillo. Contáctanos y te orientamos en cada paso.</p></div>
   <div class="enroll-steps">
     <div class="enroll-step rv" style="transition-delay:0ms">
@@ -604,98 +754,6 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
     </div>
   </div>
 
-  <p class="enroll-note rv" style="transition-delay:340ms;border-left-color:var(--rust);background:rgba(192,57,43,.05)"><strong>📅 Viernes 28 de agosto de 2026, 08:00 h — único día de inscripción</strong> para el ciclo 2026–2027. Las inscripciones a 1er grado se realizan únicamente conforme al listado oficial SAID y a la disponibilidad de lugares.</p>
-
-  <div class="doc-grid rv" style="transition-delay:350ms">
-    <div class="doc-block">
-      <div class="doc-block-title">
-        <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Documentación requerida
-      </div>
-      <ul class="doc-list">
-        <li><span class="doc-dot"></span>Ficha de inscripción (original, llenada con tinta azul) — la proporciona la escuela</li>
-        <li><span class="doc-dot"></span>Acta de nacimiento certificada</li>
-        <li><span class="doc-dot"></span>CURP actualizada del alumno (agosto 2026)</li>
-        <li><span class="doc-dot"></span>Copia del certificado médico, especificando si el alumno puede realizar actividad física</li>
-        <li><span class="doc-dot"></span>En caso de algún padecimiento, anexar diagnóstico o constancia médica</li>
-        <li><span class="doc-dot"></span>Comprobante de domicilio, con croquis del trayecto de la casa a la escuela al reverso</li>
-        <li><span class="doc-dot"></span>INE del padre, madre o tutor (ampliación al 200%)</li>
-        <li><span class="doc-dot"></span>CURP actualizada del padre, madre o tutor (agosto 2026)</li>
-        <li><span class="doc-dot"></span>Carta responsiva de entrada y salida, firmada con tinta azul, con dos teléfonos de contacto para emergencias</li>
-        <li><span class="doc-dot"></span>Ficha de Beneficiario DIF</li>
-      </ul>
-    </div>
-    <div class="doc-block">
-      <div class="doc-block-title">
-        <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Boletas según el grado al que ingresa
-      </div>
-      <ul class="doc-list">
-        <li><span class="doc-dot"></span><strong>1.° grado:</strong> copia de Preinscripción SAID y copia de Boleta de Preescolar</li>
-        <li><span class="doc-dot"></span><strong>2.° grado:</strong> copia de Boleta de 1.° grado</li>
-        <li><span class="doc-dot"></span><strong>3.° grado:</strong> copia de Boleta de 2.° grado</li>
-        <li><span class="doc-dot"></span><strong>4.° grado:</strong> copia de Boleta de 3.° grado</li>
-        <li><span class="doc-dot"></span><strong>5.° grado:</strong> copias de las boletas de 1.° a 4.° grado</li>
-        <li><span class="doc-dot"></span><strong>6.° grado:</strong> copias de las boletas de 1.° a 5.° grado</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="doc-grid doc-grid-3 rv" style="transition-delay:370ms">
-    <div class="doc-block">
-      <div class="doc-block-title">1. Expediente escolar</div>
-      <ul class="doc-list">
-        <li><span class="doc-dot"></span>Ficha de inscripción (original)</li>
-        <li><span class="doc-dot"></span>Acta de nacimiento certificada (2 copias)</li>
-        <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
-        <li><span class="doc-dot"></span>Certificado médico y, en su caso, diagnóstico (1 copia)</li>
-        <li><span class="doc-dot"></span>Comprobante de domicilio con croquis (2 copias)</li>
-        <li><span class="doc-dot"></span>INE del padre, madre o tutor al 200% (2 copias)</li>
-        <li><span class="doc-dot"></span>CURP de padre, madre o tutor (2 copias)</li>
-        <li><span class="doc-dot"></span>Carta responsiva (original)</li>
-      </ul>
-    </div>
-    <div class="doc-block">
-      <div class="doc-block-title">2. Expediente de alimentación (DIF)</div>
-      <ul class="doc-list">
-        <li><span class="doc-dot"></span>Ficha de Beneficiario DIF, ambos lados, tinta azul (original)</li>
-        <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
-      </ul>
-    </div>
-    <div class="doc-block">
-      <div class="doc-block-title">3. Programa de calzado (Tenis DIF)</div>
-      <ul class="doc-list">
-        <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
-        <li><span class="doc-dot"></span>INE del padre, madre o tutor al 200% (1 copia)</li>
-        <li><span class="doc-dot"></span>Indicar el número de calzado del alumno</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="data-grid rv" style="transition-delay:390ms">
-    <div class="data-block">
-      <h3><span aria-hidden="true">🤝</span> Aportación voluntaria</h3>
-      <div class="data-row"><span class="lbl">Monto</span><span class="val-d">$600.00</span></div>
-      <div class="data-note"><span aria-hidden="true">ℹ️</span><span>Es voluntaria y será administrada por la Mesa Directiva de Padres de Familia, para fortalecer las condiciones de la escuela.</span></div>
-    </div>
-    <div class="data-block">
-      <h3><span aria-hidden="true">🪪</span> Credencial escolar</h3>
-      <div class="data-row"><span class="lbl">Costo</span><span class="val-d">$50.00</span></div>
-      <div class="data-note"><span aria-hidden="true">ℹ️</span><span>Corresponde a la credencial escolar institucional del alumno.</span></div>
-    </div>
-  </div>
-
-  <div class="enroll-actions rv" style="transition-delay:400ms">
-    <a href="media/Inscripciones-2026-2027/requisitos-inscripcion.jpg" download class="btn-enroll btn-enroll-secondary">
-      <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
-      Guardar imagen de requisitos
-    </a>
-    <a href="media/Inscripciones-2026-2027/informacion-adicional.jpg" download class="btn-enroll btn-enroll-secondary">
-      <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
-      Guardar información adicional
-    </a>
-  </div>
-
   <p class="enroll-note rv" style="transition-delay:410ms">Fuera de este periodo, las inscripciones siguen sujetas a <strong>disponibilidad de lugares</strong>. Contáctanos para confirmar cupo.</p>
   <div class="enroll-actions rv" style="transition-delay:420ms">
     <a href="tel:5959234856" class="btn-enroll btn-enroll-primary">
@@ -710,7 +768,11 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 </div></section>
 
 <section class="sec sec-sand" id="utiles"><div class="container">
-  <div class="sec-title rv"><h2>Útiles Escolares 2026–2027</h2><span class="accent"></span><p>Elige el grado y grupo del alumno para ver su lista de materiales.</p></div>
+  <div class="sec-title rv">
+    <div class="campaign-eyebrow" style="background:rgba(192,57,43,.08);color:var(--rust);margin-bottom:18px"><span aria-hidden="true">🎉</span> Ciclo Escolar 2026–2027</div>
+    <h2>Útiles Escolares 2026–2027</h2><span class="accent"></span><p>Elige el grado y grupo del alumno para ver su lista de materiales.</p>
+    <p style="margin-top:14px"><a href="#campana-2026-2027" style="color:var(--rust);font-weight:700;text-decoration:underline">¿Aún no la inscribes? Revisa fecha y requisitos →</a></p>
+  </div>
 
   <div class="enroll-actions rv" style="transition-delay:0ms;margin-bottom:36px">
     <a href="media/Inscripciones-2026-2027/listado-utiles-escolares-2026-2027.pdf" download class="btn-enroll btn-enroll-secondary">
