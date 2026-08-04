@@ -251,13 +251,24 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 .btn-enroll-secondary{background:#fff;color:var(--navy);border:2px solid rgba(27,42,74,.15);box-shadow:var(--sh-xs)}
 .btn-enroll-secondary:hover{border-color:var(--amber);transform:translateY(-2px);box-shadow:var(--sh-sm)}
 .doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:36px 0 28px}
+.doc-grid-3{grid-template-columns:repeat(3,1fr)}
 .doc-block{background:#fff;border-radius:var(--r);padding:26px 28px;box-shadow:var(--sh-sm)}
 .doc-block-title{display:flex;align-items:center;gap:10px;font-family:'Baloo 2',cursive;font-weight:700;color:var(--navy);font-size:.92rem;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid rgba(27,42,74,.07)}
 .doc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
 .doc-list li{display:flex;align-items:flex-start;gap:10px;font-size:.875rem;color:#444;line-height:1.55}
 .doc-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:5px}
 .enroll-note{background:rgba(27,42,74,.04);border-left:3px solid var(--amber);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:13px 18px;font-size:.85rem;color:#555;line-height:1.65;margin-bottom:32px}
-@media(max-width:900px){.enroll-steps{grid-template-columns:1fr}.step-arrow{padding-top:0;justify-content:center;transform:rotate(90deg)}}
+
+/* ═══ SECCIÓN ÚTILES ESCOLARES ═══ */
+.utiles-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px}
+.utiles-tab{font-family:'Baloo 2',cursive;font-weight:700;font-size:.9rem;padding:10px 22px;border-radius:50px;background:#fff;color:var(--navy);border:2px solid rgba(27,42,74,.12);box-shadow:var(--sh-xs);cursor:pointer;transition:all .3s ease}
+.utiles-tab:hover{border-color:var(--amber)}
+.utiles-tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.utiles-panel{display:none}
+.utiles-panel.active{display:block}
+.utiles-card{max-width:760px;margin:0 auto}
+.utiles-teacher{font-size:.78rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.04em;margin:-8px 0 16px}
+@media(max-width:900px){.enroll-steps{grid-template-columns:1fr}.step-arrow{padding-top:0;justify-content:center;transform:rotate(90deg)}.doc-grid-3{grid-template-columns:1fr}}
 @media(max-width:640px){.doc-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.enroll-actions{flex-direction:column;align-items:center}}
 
@@ -334,6 +345,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
     <a href="#nosotros">Nosotros</a><a href="#maestros">Maestros</a>
     <a href="#eventos">Eventos</a><a href="#instalaciones">Instalaciones</a>
     <a href="#servicios">Servicios</a><a href="#inscripcion" style="color:var(--amber-soft);font-weight:700">Inscripción</a>
+    <a href="#utiles" style="color:var(--amber-soft);font-weight:700">Útiles Escolares</a>
     <a href="#contacto">Contacto</a>
     <a href="huerto.html" style="color:var(--amber-soft)">🌱 Huerto</a>
   </div>
@@ -347,6 +359,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
   <a href="#instalaciones" class="mob-link">Instalaciones</a>
   <a href="#servicios" class="mob-link">Servicios</a>
   <a href="#inscripcion" class="mob-link" style="color:var(--amber-soft)">Inscripción</a>
+  <a href="#utiles" class="mob-link" style="color:var(--amber-soft)">Útiles Escolares</a>
   <a href="#contacto" class="mob-link">Contacto</a>
   <a href="huerto.html" class="mob-link" style="color:var(--amber-soft)">🌱 Nuestro Huerto</a>
 </div>
@@ -369,7 +382,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
     <img src="escudo.png" alt="Escudo Escuela Primaria Miguel Hidalgo" class="hero-escudo">
     <h1>Escuela Primaria <em>"Miguel Hidalgo"</em></h1>
     <p class="hero-sub">Educación integral, humanista e incluyente en horario extendido</p>
-    <div class="hero-badge"><span aria-hidden="true">📚</span> Ciclo Escolar 2025–2026</div>
+    <div class="hero-badge"><span aria-hidden="true">📚</span> Ciclo Escolar 2026–2027</div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num">08:00–16:00 h</div><div class="hero-stat-label">Horario</div></div>
       <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Grupos</div></div>
@@ -557,37 +570,103 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
         <svg class="ic-svg-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       </div>
       <h4>Completa el registro</h4>
-      <p>Entrega la documentación requerida y formaliza la inscripción al ciclo 2025–2026.</p>
+      <p>Entrega la documentación requerida y formaliza la inscripción al ciclo 2026–2027.</p>
     </div>
   </div>
+
+  <p class="enroll-note rv" style="transition-delay:340ms;border-left-color:var(--rust);background:rgba(192,57,43,.05)"><strong>📅 Viernes 28 de agosto de 2026, 08:00 h — único día de inscripción</strong> para el ciclo 2026–2027. Las inscripciones a 1er grado se realizan únicamente conforme al listado oficial SAID y a la disponibilidad de lugares.</p>
+
   <div class="doc-grid rv" style="transition-delay:350ms">
     <div class="doc-block">
       <div class="doc-block-title">
         <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Traes copias de
+        Documentación requerida
       </div>
       <ul class="doc-list">
-        <li><span class="doc-dot"></span>Acta de nacimiento del alumno</li>
-        <li><span class="doc-dot"></span>CURP actualizada del alumno</li>
-        <li><span class="doc-dot"></span>Boleta del ciclo escolar anterior</li>
-        <li><span class="doc-dot"></span>Comprobante de domicilio</li>
-        <li><span class="doc-dot"></span>INE del tutor o tutora</li>
-        <li><span class="doc-dot"></span>CURP del tutor o tutora</li>
+        <li><span class="doc-dot"></span>Ficha de inscripción (original, llenada con tinta azul) — la proporciona la escuela</li>
+        <li><span class="doc-dot"></span>Acta de nacimiento certificada</li>
+        <li><span class="doc-dot"></span>CURP actualizada del alumno (agosto 2026)</li>
+        <li><span class="doc-dot"></span>Copia del certificado médico, especificando si el alumno puede realizar actividad física</li>
+        <li><span class="doc-dot"></span>En caso de algún padecimiento, anexar diagnóstico o constancia médica</li>
+        <li><span class="doc-dot"></span>Comprobante de domicilio, con croquis del trayecto de la casa a la escuela al reverso</li>
+        <li><span class="doc-dot"></span>INE del padre, madre o tutor (ampliación al 200%)</li>
+        <li><span class="doc-dot"></span>CURP actualizada del padre, madre o tutor (agosto 2026)</li>
+        <li><span class="doc-dot"></span>Carta responsiva de entrada y salida, firmada con tinta azul, con dos teléfonos de contacto para emergencias</li>
+        <li><span class="doc-dot"></span>Ficha de Beneficiario DIF</li>
       </ul>
     </div>
     <div class="doc-block">
       <div class="doc-block-title">
         <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Se recogen en dirección
+        Boletas según el grado al que ingresa
       </div>
       <ul class="doc-list">
-        <li><span class="doc-dot"></span>Ficha de inscripción institucional</li>
-        <li><span class="doc-dot"></span>Ficha de registro del comedor escolar</li>
-        <li><span class="doc-dot"></span>Carta responsiva</li>
+        <li><span class="doc-dot"></span><strong>1.° grado:</strong> copia de Preinscripción SAID y copia de Boleta de Preescolar</li>
+        <li><span class="doc-dot"></span><strong>2.° grado:</strong> copia de Boleta de 1.° grado</li>
+        <li><span class="doc-dot"></span><strong>3.° grado:</strong> copia de Boleta de 2.° grado</li>
+        <li><span class="doc-dot"></span><strong>4.° grado:</strong> copia de Boleta de 3.° grado</li>
+        <li><span class="doc-dot"></span><strong>5.° grado:</strong> copias de las boletas de 1.° a 4.° grado</li>
+        <li><span class="doc-dot"></span><strong>6.° grado:</strong> copias de las boletas de 1.° a 5.° grado</li>
       </ul>
     </div>
   </div>
-  <p class="enroll-note rv" style="transition-delay:380ms">Las inscripciones están abiertas <strong>durante todo el ciclo escolar</strong>, sujetas a disponibilidad de lugares. Contáctanos para confirmar cupo.</p>
+
+  <div class="doc-grid doc-grid-3 rv" style="transition-delay:370ms">
+    <div class="doc-block">
+      <div class="doc-block-title">1. Expediente escolar</div>
+      <ul class="doc-list">
+        <li><span class="doc-dot"></span>Ficha de inscripción (original)</li>
+        <li><span class="doc-dot"></span>Acta de nacimiento certificada (2 copias)</li>
+        <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
+        <li><span class="doc-dot"></span>Certificado médico y, en su caso, diagnóstico (1 copia)</li>
+        <li><span class="doc-dot"></span>Comprobante de domicilio con croquis (2 copias)</li>
+        <li><span class="doc-dot"></span>INE del padre, madre o tutor al 200% (2 copias)</li>
+        <li><span class="doc-dot"></span>CURP de padre, madre o tutor (2 copias)</li>
+        <li><span class="doc-dot"></span>Carta responsiva (original)</li>
+      </ul>
+    </div>
+    <div class="doc-block">
+      <div class="doc-block-title">2. Expediente de alimentación (DIF)</div>
+      <ul class="doc-list">
+        <li><span class="doc-dot"></span>Ficha de Beneficiario DIF, ambos lados, tinta azul (original)</li>
+        <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
+      </ul>
+    </div>
+    <div class="doc-block">
+      <div class="doc-block-title">3. Programa de calzado (Tenis DIF)</div>
+      <ul class="doc-list">
+        <li><span class="doc-dot"></span>CURP actualizada del alumno (1 copia)</li>
+        <li><span class="doc-dot"></span>INE del padre, madre o tutor al 200% (1 copia)</li>
+        <li><span class="doc-dot"></span>Indicar el número de calzado del alumno</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="data-grid rv" style="transition-delay:390ms">
+    <div class="data-block">
+      <h3><span aria-hidden="true">🤝</span> Aportación voluntaria</h3>
+      <div class="data-row"><span class="lbl">Monto</span><span class="val-d">$600.00</span></div>
+      <div class="data-note"><span aria-hidden="true">ℹ️</span><span>Es voluntaria y será administrada por la Mesa Directiva de Padres de Familia, para fortalecer las condiciones de la escuela.</span></div>
+    </div>
+    <div class="data-block">
+      <h3><span aria-hidden="true">🪪</span> Credencial escolar</h3>
+      <div class="data-row"><span class="lbl">Costo</span><span class="val-d">$50.00</span></div>
+      <div class="data-note"><span aria-hidden="true">ℹ️</span><span>Corresponde a la credencial escolar institucional del alumno.</span></div>
+    </div>
+  </div>
+
+  <div class="enroll-actions rv" style="transition-delay:400ms">
+    <a href="media/Inscripciones-2026-2027/requisitos-inscripcion.jpg" download class="btn-enroll btn-enroll-secondary">
+      <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+      Guardar imagen de requisitos
+    </a>
+    <a href="media/Inscripciones-2026-2027/informacion-adicional.jpg" download class="btn-enroll btn-enroll-secondary">
+      <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+      Guardar información adicional
+    </a>
+  </div>
+
+  <p class="enroll-note rv" style="transition-delay:410ms">Fuera de este periodo, las inscripciones siguen sujetas a <strong>disponibilidad de lugares</strong>. Contáctanos para confirmar cupo.</p>
   <div class="enroll-actions rv" style="transition-delay:420ms">
     <a href="tel:5959234856" class="btn-enroll btn-enroll-primary">
       <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
@@ -597,6 +676,237 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
       <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       dpr0560i@dee.edu.mx
     </a>
+  </div>
+</div></section>
+
+<section class="sec sec-sand" id="utiles"><div class="container">
+  <div class="sec-title rv"><h2>Útiles Escolares 2026–2027</h2><span class="accent"></span><p>Elige el grado y grupo del alumno para ver su lista de materiales.</p></div>
+
+  <div class="enroll-actions rv" style="transition-delay:0ms;margin-bottom:36px">
+    <a href="media/Inscripciones-2026-2027/listado-utiles-escolares-2026-2027.pdf" download class="btn-enroll btn-enroll-secondary">
+      <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+      Descargar PDF completo (las 7 listas)
+    </a>
+  </div>
+
+  <div class="utiles-tabs rv" style="transition-delay:60ms">
+    <button class="utiles-tab active" data-tab="1A" onclick="showUtiles('1A')">1.° "A"</button>
+    <button class="utiles-tab" data-tab="2A" onclick="showUtiles('2A')">2.° "A"</button>
+    <button class="utiles-tab" data-tab="3A" onclick="showUtiles('3A')">3.° "A"</button>
+    <button class="utiles-tab" data-tab="3B" onclick="showUtiles('3B')">3.° "B"</button>
+    <button class="utiles-tab" data-tab="4A" onclick="showUtiles('4A')">4.° "A"</button>
+    <button class="utiles-tab" data-tab="5A" onclick="showUtiles('5A')">5.° "A"</button>
+    <button class="utiles-tab" data-tab="6A" onclick="showUtiles('6A')">6.° "A"</button>
+  </div>
+
+  <div class="utiles-panels rv-scale" style="transition-delay:100ms">
+
+    <div class="utiles-panel active" id="utiles-1A">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 1.° "A"
+        </div>
+        <p class="utiles-teacher">Profra. Carmela Ortega García</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>6 libretas profesional cuadro chico: Lenguajes, Ética Naturaleza y Sociedad, De lo Humano y lo Comunitario, Saberes y Pensamiento Científico, Ejercicios de Motricidad y Lecto-escritura</li>
+          <li><span class="doc-dot"></span>1 libreta profesional cuadro grande (Matemáticas), cosida para evitar que se desprendan las hojas</li>
+          <li><span class="doc-dot"></span>1 cuaderno de marquilla de 30 hojas</li>
+          <li><span class="doc-dot"></span>Lápiz, goma, colores, sacapuntas, Resistol adhesivo, Resistol líquido y tijeras</li>
+          <li><span class="doc-dot"></span>1 libro para colorear grande al gusto del alumno(a)</li>
+          <li><span class="doc-dot"></span>1 ábaco de 100 bolitas</li>
+          <li><span class="doc-dot"></span>Una regla de 30 cm de plástico flexible</li>
+          <li><span class="doc-dot"></span>2 plastilinas de cualquier color</li>
+          <li><span class="doc-dot"></span>Libro "Arcoíris de letras", ed. Trillas (Gabriela Almada, Ana Claudia Calderón)</li>
+          <li><span class="doc-dot"></span><strong>Todos los materiales deberán llevar nombre</strong></li>
+          <li><span class="doc-dot"></span><strong>Materiales para el salón:</strong> paquete de 500 hojas blancas tamaño carta, 1 marcador para pizarrón blanco color negro, un gel antibacterial, jabón líquido, papel higiénico (paquete de 4 rollos, de preferencia doble rollo) y 2 pliegos de papel crepé (cualquier color)</li>
+          <li><span class="doc-dot"></span>Nota: cuadernos forrados con papel lustre color anaranjado, etiqueta al frente y plástico; libros forrados únicamente con plástico grueso y etiqueta al frente</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-1A.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="utiles-panel" id="utiles-2A">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 2.° "A"
+        </div>
+        <p class="utiles-teacher">Mtro. Paul Cervantes Moreno</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas cuadrícula chica — Lenguajes</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas cuadrícula chica — Saberes y Pensamiento Científico</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas cuadrícula chica — Ética, Naturaleza y Sociedades</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas cuadrícula chica — De lo Humano a lo Comunitario</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas cuadrícula chica — Lectura y Escritura</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas lisa — Artes</li>
+          <li><span class="doc-dot"></span>Lápiz, goma, sacapuntas bicolor, lápiz adhesivo, tijeras punta roma</li>
+          <li><span class="doc-dot"></span>Regla geométrica y compás</li>
+          <li><span class="doc-dot"></span>Una caja de lápices de colores de madera</li>
+          <li><span class="doc-dot"></span><strong>Material para el salón:</strong> 300 hojas blancas tamaño carta, 1 jabón líquido de 1 litro, 1 paquete de papel higiénico (4 rollos)</li>
+          <li><span class="doc-dot"></span>Nota: libretas forradas con papel de su preferencia y plástico; cada libreta con datos de alumno, maestro y escuela; colocar nombre de cada asignatura</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-2A.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="utiles-panel" id="utiles-3A">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 3.° "A"
+        </div>
+        <p class="utiles-teacher">Profr. Alfredo Silva Toto</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>1 libreta profesional 100 hojas cuadro chico, forro ROJO, hule cristal, etiqueta — "De lo Humano a lo Comunitario"</li>
+          <li><span class="doc-dot"></span>1 ídem forro AZUL — "Lenguajes"</li>
+          <li><span class="doc-dot"></span>1 ídem forro VERDE BANDERA — "Ética, Naturaleza y Sociedades"</li>
+          <li><span class="doc-dot"></span>1 ídem forro AMARILLO — "Saberes y Pensamiento Científico"</li>
+          <li><span class="doc-dot"></span>1 ídem forro ANARANJADO — "Retos Matemáticos"</li>
+          <li><span class="doc-dot"></span>1 ídem forro GRIS — "Escritura y Caligrafía"</li>
+          <li><span class="doc-dot"></span>1 libreta forma italiana 100 hojas, cuadro chico, forro opcional — "Tareas y Recados"</li>
+          <li><span class="doc-dot"></span><strong>Lapicera:</strong> lápiz, goma, sacapuntas, lápiz adhesivo jumbo, 12 colores de madera, juego geométrico flexible, tijeras, marcatextos y plumones (todo con nombre); 2 porta hojas tamaño carta</li>
+          <li><span class="doc-dot"></span><strong>Uso común (se entrega al maestro):</strong> 3 marcadores para pizarrón blanco (rojo, negro y azul), 500 hojas blancas tamaño carta, 50 hojas de colores claros, 1 bolígrafo rojo y 1 negro, 1 cinta adhesiva gruesa, 1 botella de jabón líquido</li>
+          <li><span class="doc-dot"></span>Nota: libros de texto se forran solo con hule cristal y etiqueta de datos; la lista queda abierta durante el ciclo según necesidades del grupo</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-3A.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="utiles-panel" id="utiles-3B">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 3.° "B"
+        </div>
+        <p class="utiles-teacher">Mtra. Mayra Melina Varela Sánchez</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>3 cuadernos profesionales 100 hojas cuadro chico: Saberes y Pensamiento Científico (forro azul cielo), Ejercicios Matemáticos (forro azul marino), Inglés (forro blanco)</li>
+          <li><span class="doc-dot"></span>3 cuadernos profesionales doble raya 100 hojas: Lenguajes (forro rosa claro), Ejercicios Lenguajes (forro rosa mexicano), y uno dividido en 2 partes — 50 hojas Ética/Naturaleza/Sociedades y 50 hojas De lo Humano y lo Comunitario (forro verde manzana)</li>
+          <li><span class="doc-dot"></span>Diccionario</li>
+          <li><span class="doc-dot"></span>Un folder de plástico tamaño carta</li>
+          <li><span class="doc-dot"></span>Todo con nombre, forrado con hule cristal o mica adherible</li>
+          <li><span class="doc-dot"></span><strong>Lapicera:</strong> lápiz, color rojo, sacapuntas con contenedor, goma, tijeras punta redonda, colores de madera, regla de 30 cm, pegamento en barra o líquido</li>
+          <li><span class="doc-dot"></span><strong>Material para el salón:</strong> 1 jabón líquido de 1 litro, 500 hojas blancas tamaño carta; cada alumno(a) lleva su propio papel higiénico</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-3B.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="utiles-panel" id="utiles-4A">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 4.° "A"
+        </div>
+        <p class="utiles-teacher">Mtra. Ana Silvia Falcón Cadena</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>1 libreta de 200 hojas cuadro chico, Proyectos Escolares (color naranja)</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas cuadro chico, Pensamiento Matemático (color azul cielo)</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas, Producción de Textos (color amarillo)</li>
+          <li><span class="doc-dot"></span>1 libreta de 100 hojas para Inglés, cuadro chico (color pendiente)</li>
+          <li><span class="doc-dot"></span>1 carpeta de tres argollas con 30 porta hojas, datos al frente</li>
+          <li><span class="doc-dot"></span>2 porta hojas para documentos personales</li>
+          <li><span class="doc-dot"></span>Lapiceros tinta negra, azul y roja, marca textos</li>
+          <li><span class="doc-dot"></span>Lápiz, goma, sacapuntas, tijeras, pritt y colores de madera (no plumones)</li>
+          <li><span class="doc-dot"></span>Regla de 30 cm, transportador y compás</li>
+          <li><span class="doc-dot"></span>Diccionario y calculadora</li>
+          <li><span class="doc-dot"></span>3 plumones para pintarrón (rojo, negro y azul) y un marcador de cera (azul)</li>
+          <li><span class="doc-dot"></span>2 barras de silicón gruesas</li>
+          <li><span class="doc-dot"></span>200 hojas blancas tamaño carta y 20 hojas de color</li>
+          <li><span class="doc-dot"></span>Un paquete de papel higiénico, 1 gel antibacterial y 1 jabón líquido</li>
+          <li><span class="doc-dot"></span>Nota: todas las libretas forradas y con etiqueta de datos personales, igual que los demás materiales</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-4A.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="utiles-panel" id="utiles-5A">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 5.° "A"
+        </div>
+        <p class="utiles-teacher">Profr. J. Guadalupe Aragón Neri</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>1 cuaderno cuadro grande — Proyectos de Aula</li>
+          <li><span class="doc-dot"></span>1 cuaderno cuadro grande — Proyectos Escolares</li>
+          <li><span class="doc-dot"></span>1 cuaderno de raya — Proyectos Comunitarios</li>
+          <li><span class="doc-dot"></span>1 cuaderno de raya — Escribimos en el Aula</li>
+          <li><span class="doc-dot"></span>1 cuaderno cuadro grande (200 hojas) — Ejercicios Desafiantes</li>
+          <li><span class="doc-dot"></span>Cuadernos de 100 hojas tamaño profesional (salvo Ejercicios Desafiantes, 200 hojas), forrados con papel lustre azul rey (niños) o lila (niñas), con plástico o mica y etiqueta de datos y materia; se solicita coserlos</li>
+          <li><span class="doc-dot"></span>Lápiz, goma, colores, regla, sacapuntas, pegamento</li>
+          <li><span class="doc-dot"></span>Juego geométrico (escuadras, transportador, compás) — llevar en la mochila cuando se solicite</li>
+          <li><span class="doc-dot"></span>Diccionario</li>
+          <li><span class="doc-dot"></span><strong>Material para el salón:</strong> un marcador para pizarrón (azul, rojo, verde o negro), 1 litro de jabón líquido y 500 hojas blancas tamaño carta</li>
+          <li><span class="doc-dot"></span>Papel higiénico de uso personal en la mochila</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-5A.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="utiles-panel" id="utiles-6A">
+      <div class="doc-block utiles-card">
+        <div class="doc-block-title">
+          <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Lista de útiles — 6.° "A"
+        </div>
+        <p class="utiles-teacher">Mtro. Jorge Armas Tobón</p>
+        <ul class="doc-list">
+          <li><span class="doc-dot"></span>1 cuaderno profesional de raya, 100 hojas — Campo Formativo de Lenguajes (forro rojo)</li>
+          <li><span class="doc-dot"></span>1 cuaderno profesional 100 hojas cuadro chico — Ética, Naturaleza y Sociedades / De lo Humano y lo Comunitario (forro morado)</li>
+          <li><span class="doc-dot"></span>1 cuaderno profesional 100 hojas cuadro chico — Saberes y Pensamiento Científico (forro azul rey)</li>
+          <li><span class="doc-dot"></span>1 cuaderno profesional 100 hojas cuadro chico — Pensamiento Lógico-Matemático (forro anaranjado)</li>
+          <li><span class="doc-dot"></span>1 cuaderno profesional 100 hojas doble raya — Fortalecimiento Lenguajes 2/3 y 1/3 Caligrafía (forro azul marino)</li>
+          <li><span class="doc-dot"></span>Todos con etiqueta de datos y forro de plástico</li>
+          <li><span class="doc-dot"></span>1 block de marquilla de 20 hojas, forro libre, etiqueta y plástico</li>
+          <li><span class="doc-dot"></span>1 paquete de 500 hojas blancas tamaño carta y 20 hojas de color</li>
+          <li><span class="doc-dot"></span>Juego geométrico de plástico rígido y 1 compás de precisión</li>
+          <li><span class="doc-dot"></span>1 diccionario, caja de colores de madera, 1 marcatextos</li>
+          <li><span class="doc-dot"></span>Lápiz, goma, sacapuntas</li>
+          <li><span class="doc-dot"></span>1 botella (litro) de jabón líquido y 1 folder tamaño carta color beige</li>
+          <li><span class="doc-dot"></span>Cuaderno de inglés: se pedirá cuando el maestro indique (puede reutilizarse el del ciclo anterior)</li>
+          <li><span class="doc-dot"></span>Cada alumno(a) lleva diario su papel higiénico</li>
+        </ul>
+        <div class="enroll-actions" style="margin-top:22px">
+          <a href="media/Inscripciones-2026-2027/utiles-6A.jpg" download class="btn-enroll btn-enroll-secondary">
+            <svg class="ic-svg-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Guardar imagen
+          </a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div></section>
 
@@ -662,10 +972,11 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
       <a href="#nosotros">Nosotros</a><a href="#maestros">Maestros</a>
       <a href="#eventos">Eventos</a><a href="#instalaciones">Instalaciones</a>
       <a href="#servicios">Servicios</a><a href="#inscripcion" style="color:var(--amber-soft);font-weight:700">Inscripción</a>
+      <a href="#utiles" style="color:var(--amber-soft);font-weight:700">Útiles Escolares</a>
       <a href="#horarios">Horarios</a><a href="#contacto">Contacto</a><a href="huerto.html">🌱 Nuestro Huerto</a>
     </nav>
   </div>
-  <div class="footer-bottom"><p>© 2025–2026 Escuela Primaria "Miguel Hidalgo" · Los Reyes San Salvador, Texcoco, Estado de México</p></div>
+  <div class="footer-bottom"><p>© 2026–2027 Escuela Primaria "Miguel Hidalgo" · Los Reyes San Salvador, Texcoco, Estado de México</p></div>
 </div></footer>
 
 <script>
@@ -694,6 +1005,11 @@ function initC(id,did){
   setInterval(()=>{if(!st.paused)slideC(id,1)},6000);
 }
 function slideC(id,dir){const s=cars[id];s.c=(s.c+dir+s.t)%s.t;updC(id)}
+// Tabs de útiles escolares
+function showUtiles(tab){
+  document.querySelectorAll('.utiles-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.querySelectorAll('.utiles-panel').forEach(p=>p.classList.toggle('active',p.id==='utiles-'+tab));
+}
 function updC(id){const s=cars[id];document.getElementById(id).style.transform=`translateX(-${s.c*100}%)`;const did=id==='carEvents'?'dotsEvents':'dotsInst';document.getElementById(did).querySelectorAll('.fw-dot').forEach((d,i)=>d.classList.toggle('active',i===s.c))}
 initC('carEvents','dotsEvents');initC('carInst','dotsInst');
 // Cursor personalizado — dot + partículas

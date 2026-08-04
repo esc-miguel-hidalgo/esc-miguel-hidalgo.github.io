@@ -46,8 +46,13 @@ Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git
     │   ├── foto10.jpg → Plato del Bien Comer
     │   ├── foto11.jpg → Comedor
     │   └── foto12.jpg → Aula de cómputo
-    └── huerto/                 # Galería de la página huerto.html (7 fotos)
-        ├── foto1.jpg … foto7.jpg
+    ├── huerto/                 # Galería de la página huerto.html (7 fotos)
+    │   ├── foto1.jpg … foto7.jpg
+    └── Inscripciones-2026-2027/  # Inscripción y útiles escolares ciclo 2026–2027 (#inscripcion, #utiles)
+        ├── requisitos-inscripcion.jpg      # Hoja de requisitos (fecha, documentos, expedientes, boletas)
+        ├── informacion-adicional.jpg       # Aportación voluntaria y credencial
+        ├── utiles-1A.jpg … utiles-6A.jpg   # Lista de útiles por grado/grupo (7 imágenes)
+        └── listado-utiles-escolares-2026-2027.pdf  # PDF completo con las 7 listas
 ```
 
 > **Nota:** El repositorio remoto contiene además una carpeta `img/` con fotos legadas que no se usan en la versión actual del sitio.
@@ -219,7 +224,8 @@ Para modificar los pasos o documentos, editar directamente el HTML en las línea
 | `#instalaciones` | `.sec-sand` | Texto introductorio de infraestructura |
 | `#fotos-inst` | `.sec-sand fw-carousel-section` | Carrusel de fotos (`#carInst`, 12 slides) |
 | `#servicios` | `.sec-sand` | Cards de servicios (Horario extendido, Comedor, Cómputo, Inglés) |
-| `#inscripcion` | `.sec-sand` | Proceso de inscripción + documentos + CTAs |
+| `#inscripcion` | `.sec-sand` | Proceso de inscripción + fecha/documentos del ciclo 2026–2027 + expedientes + boletas por grado + aportación/credencial + CTAs |
+| `#utiles` | `.sec-sand` | Listas de útiles escolares por grado/grupo (tabs), texto + imagen descargable + PDF completo |
 | `#horarios` | `.sec-sand` | Datos generales + horario escolar |
 | `#contacto` | `.sec-sand` | Cards de contacto + iframe Google Maps |
 | *(footer)* | `.footer` | Nav rápida + créditos |
@@ -317,4 +323,4 @@ git push
 ## Créditos
 
 - Escuela Primaria "Miguel Hidalgo" · C.C.T. 15DPR0560I · Zona 55 · Sector III
-- Ciclo Escolar 2025–2026
+- Ciclo Escolar 2026–2027
