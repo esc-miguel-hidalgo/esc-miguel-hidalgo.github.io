@@ -11,7 +11,7 @@ Sitio web estático de la Escuela Primaria "Miguel Hidalgo", C.C.T. 15DPR0560I, 
 
 | Capa | Decisión |
 |---|---|
-| HTML | Semántico, un solo archivo por página (`index.html`, `huerto.html`) |
+| HTML | Semántico, un solo archivo por página (`index.html`, `huerto.html`, `inscripciones-2026-2027.html`) |
 | CSS | Inline `<style>` en cada página, design tokens vía CSS custom properties |
 | JS | Vanilla JS inline `<script>`, sin dependencias ni bundler |
 | Fuentes | Google Fonts: **Baloo 2** (display/headings) + **DM Sans** (body) |
@@ -27,6 +27,7 @@ Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git
 /
 ├── index.html              # Página principal (landing completa)
 ├── huerto.html             # Subpágina del proyecto Huerto Escolar
+├── inscripciones-2026-2027.html  # Requisitos, documentos y útiles del ciclo (imágenes + descarga + impresión)
 ├── escudo.png              # Logo institucional (usado en nav + OG image)
 ├── favicon.ico
 ├── favicon-32x32.png
@@ -48,11 +49,13 @@ Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git
     │   └── foto12.jpg → Aula de cómputo
     ├── huerto/                 # Galería de la página huerto.html (7 fotos)
     │   ├── foto1.jpg … foto7.jpg
-    └── Inscripciones-2026-2027/  # Inscripción y útiles escolares ciclo 2026–2027 (#inscripcion, #utiles)
+    └── Inscripciones-2026-2027/  # Todo lo que usa inscripciones-2026-2027.html
         ├── requisitos-inscripcion.jpg      # Hoja de requisitos (fecha, documentos, expedientes, boletas)
         ├── informacion-adicional.jpg       # Aportación voluntaria y credencial
         ├── utiles-1A.jpg … utiles-6A.jpg   # Lista de útiles por grado/grupo (7 imágenes)
-        └── listado-utiles-escolares-2026-2027.pdf  # PDF completo con las 7 listas
+        ├── listado-utiles-escolares-2026-2027.pdf  # PDF completo con las 7 listas
+        ├── carta-responsiva-2026-2027.pdf  # Formato en blanco para llenar y entregar
+        └── formato-registro-dif-2026-2027.pdf  # Formato oficial DIF de posible beneficiario
 ```
 
 ---
@@ -194,16 +197,29 @@ Para agregar un elemento nuevo a la detección de hover, añadirlo al selector e
 e.target.closest('a,button,.mi-nuevo-componente')
 ```
 
-**En `huerto.html`:** misma arquitectura, colores verdes (`var(--leaf)` + `var(--sun)`).
+**En `huerto.html` e `inscripciones-2026-2027.html`:** misma arquitectura de cursor y scroll-reveal. `huerto.html` usa colores verdes (`var(--leaf)` + `var(--sun)`); `inscripciones-2026-2027.html` usa la paleta principal (navy/rust/amber).
 
 ### Sección de inscripción (`#inscripcion`)
 
-Estructura fija de tres zonas:
+Estructura fija de tres zonas (el proceso general, válido todo el año — no confundir con la página `inscripciones-2026-2027.html`, que trae la información específica y temporal del ciclo):
 1. `.enroll-steps` — grid 3 columnas con flechas `›` entre pasos
-2. `.doc-grid` — grid 2 columnas: "Documentos (copias)" y "Se recogen en dirección"
+2. `.enroll-note` — nota de disponibilidad de lugares
 3. `.enroll-actions` — botones tel + mailto
 
-Para modificar los pasos o documentos, editar directamente el HTML en las líneas marcadas con `<!-- ═══ INSCRIPCIÓN ═══ -->`.
+Arriba de estas tres zonas hay una tarjeta `.campaign-cta` con un botón hacia `inscripciones-2026-2027.html` — es el único puente entre la página principal y la información del ciclo 2026–2027.
+
+Para modificar los pasos, editar directamente el HTML en las líneas marcadas con `<!-- ═══ INSCRIPCIÓN ═══ -->`.
+
+### Página "Inscripciones y Útiles" (`inscripciones-2026-2027.html`)
+
+Página independiente (mismo patrón que `huerto.html`: `back-nav` + footer con "← Volver a la página principal"). El contenido es explícitamente temporal — cuando termine el ciclo 2026–2027, esta página se reemplaza por la del siguiente ciclo (o se archiva) sin tocar `index.html`, salvo el link del CTA/nav si cambia el nombre de archivo.
+
+Tres secciones:
+1. `#requisitos` — texto simple de horarios por prioridad + las 2 imágenes originales de la escuela (requisitos, información adicional), cada una con Ver tamaño completo / Descargar / Imprimir.
+2. `#documentos` — tarjetas de descarga para PDFs que no son imagen (carta responsiva, formato DIF, listado completo de útiles).
+3. `#utiles` — mismas pestañas por grado/grupo que antes vivían en `index.html` (`showUtiles()`), pero cada panel sólo muestra la imagen de esa lista con Ver/Descargar/Imprimir — sin transcripción en texto (cada `<img>` sí lleva `alt` descriptivo).
+
+La función `printImage(src, title)` (al final del `<script>`) abre la imagen sola en una pestaña nueva y dispara `window.print()` — se reutiliza en todos los botones "Imprimir" de la página.
 
 ---
 
@@ -220,8 +236,7 @@ Para modificar los pasos o documentos, editar directamente el HTML en las línea
 | `#instalaciones` | `.sec-sand` | Texto introductorio de infraestructura |
 | `#fotos-inst` | `.sec-sand fw-carousel-section` | Carrusel de fotos (`#carInst`, 12 slides) |
 | `#servicios` | `.sec-sand` | Cards de servicios (Horario extendido, Comedor, Cómputo, Inglés) |
-| `#inscripcion` | `.sec-sand` | Proceso de inscripción + fecha/documentos del ciclo 2026–2027 + expedientes + boletas por grado + aportación/credencial + CTAs |
-| `#utiles` | `.sec-sand` | Listas de útiles escolares por grado/grupo (tabs), texto + imagen descargable + PDF completo |
+| `#inscripcion` | `.sec-sand` | CTA hacia `inscripciones-2026-2027.html` + proceso general de inscripción (evergreen) + CTAs de contacto |
 | `#horarios` | `.sec-sand` | Datos generales + horario escolar |
 | `#contacto` | `.sec-sand` | Cards de contacto + iframe Google Maps |
 | *(footer)* | `.footer` | Nav rápida + créditos |
