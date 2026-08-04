@@ -48,6 +48,17 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 @keyframes cPop{0%{opacity:.6;transform:translate(var(--ex),var(--ey)) translate(-50%,-50%)}100%{opacity:0;transform:translate(var(--ex),calc(var(--ey) - 20px)) translate(-50%,-50%) scale(.1)}}
 body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 @media(hover:none){body{cursor:auto}.c-dot,.c-particle{display:none!important}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  body{cursor:auto}
+  .c-dot,.c-particle{display:none!important}
+  .rv,.rv-scale{opacity:1!important;transform:none!important}
+}
+
+/* ═══ SKIP LINK ═══ */
+.skip-link{position:fixed;top:-60px;left:12px;background:var(--navy);color:#fff;padding:12px 22px;border-radius:0 0 var(--r-sm) var(--r-sm);font-weight:700;font-size:.85rem;z-index:100000;transition:top .2s ease}
+.skip-link:focus{top:0}
 
 /* ═══ ICONOS SVG ═══ */
 .ic-svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;flex-shrink:0}
@@ -70,8 +81,8 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 .navbar.scrolled .nav-brand img{width:36px}
 .nav-brand-text h2{color:#fff;font-size:1rem;font-weight:700}
 .nav-brand-text span{color:var(--amber);font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
-.nav-links{display:flex;gap:4px}
-.nav-links a{color:rgba(255,255,255,.75);font-weight:600;font-size:.85rem;padding:8px 16px;border-radius:10px;transition:all .3s ease}
+.nav-links{display:flex;gap:2px;flex-wrap:nowrap}
+.nav-links a{color:rgba(255,255,255,.75);font-weight:600;font-size:.82rem;padding:8px 12px;border-radius:10px;transition:all .3s ease;white-space:nowrap}
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
 .hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:3px;transition:all .3s ease}
@@ -153,6 +164,8 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 .drone-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .drone-video iframe{position:absolute;width:100vw;height:56.25vw;min-height:100%;min-width:177.78vh;top:50%;left:50%;transform:translate(-50%,-50%);border:none;pointer-events:none}
 .drone-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,var(--navy) 0%,transparent 15%,transparent 85%,var(--sand) 100%);pointer-events:none;z-index:1}
+.drone-pause-btn{position:absolute;bottom:20px;right:20px;z-index:5;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(17,28,51,.55);backdrop-filter:blur(8px);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease}
+.drone-pause-btn:hover{background:var(--amber);border-color:var(--amber);color:var(--navy)}
 
 /* ═══ PANORÁMICA ═══ */
 .panoramic-section{position:relative;width:100%;height:50vh;min-height:300px;max-height:480px;overflow:hidden;margin-top:-2px}
@@ -328,6 +341,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 </head>
 <body>
 
+<a href="#hero" class="skip-link">Saltar al contenido principal</a>
 <div id="cDot" class="c-dot" aria-hidden="true"></div>
 
 <div class="top-bar"><div class="container">
@@ -345,7 +359,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
     <a href="#nosotros">Nosotros</a><a href="#maestros">Maestros</a>
     <a href="#eventos">Eventos</a><a href="#instalaciones">Instalaciones</a>
     <a href="#servicios">Servicios</a><a href="#inscripcion" style="color:var(--amber-soft);font-weight:700">Inscripción</a>
-    <a href="#utiles" style="color:var(--amber-soft);font-weight:700">Útiles Escolares</a>
+    <a href="#utiles" style="color:var(--amber-soft);font-weight:700">Útiles</a>
     <a href="#contacto">Contacto</a>
     <a href="huerto.html" style="color:var(--amber-soft)">🌱 Huerto</a>
   </div>
@@ -365,7 +379,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 </div>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero" id="hero">
+<section class="hero" id="hero" tabindex="-1">
   <div class="hero-shapes">
     <div class="ck c1"></div><div class="ck ci c2"></div><div class="ck di c3"></div>
     <div class="ck c4"></div><div class="ck ci da c5"></div><div class="ck da c6"></div>
@@ -407,12 +421,17 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
   <div class="drone-overlay"></div>
   <div class="drone-video">
     <iframe
+      id="droneVideo"
       src="https://www.youtube.com/embed/1DKna3iaSZ4?autoplay=1&mute=1&loop=1&playlist=1DKna3iaSZ4&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
       allow="autoplay; encrypted-media"
       allowfullscreen
       title="Video aéreo del plantel">
     </iframe>
   </div>
+  <button class="drone-pause-btn" id="dronePauseBtn" aria-pressed="false" aria-label="Pausar video de fondo">
+    <svg class="ic-svg-sm" id="droneIconPause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    <svg class="ic-svg-sm" id="droneIconPlay" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+  </button>
 </div>
 
 <section class="sec sec-sand" id="nosotros"><div class="container">
@@ -496,18 +515,18 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--rust)}
 </div>
 <div class="rv-scale" style="position:relative">
   <div class="fw-carousel" id="carInst">
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto1.jpg')"><div class="fw-slide-info"><h4>Aulas</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto2.jpg')"><div class="fw-slide-info"><h4>Comedor escolar</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto3.jpg')"><div class="fw-slide-info"><h4>Patio cívico</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto4.jpg')"><div class="fw-slide-info"><h4>Canchas deportivas</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto5.jpg')"><div class="fw-slide-info"><h4>Biblioteca escolar</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto6.jpg')"><div class="fw-slide-info"><h4>Sanitarios</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto7.jpg')"><div class="fw-slide-info"><h4>Huerto escolar</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto8.jpg')"><div class="fw-slide-info"><h4>Huerto escolar</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto9.jpg')"><div class="fw-slide-info"><h4>Desayunos calientes</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto10.jpg')"><div class="fw-slide-info"><h4>Plato del Bien Comer</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto11.jpg')"><div class="fw-slide-info"><h4>Comedor</h4></div></div>
-    <div class="fw-slide fw-slide-photo" style="background-image:url('media/Instalaciones/foto12.jpg')"><div class="fw-slide-info"><h4>Aula de cómputo</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Pasillo techado frente a las aulas, con columnas pintadas de colores y macetas" style="background-image:url('media/Instalaciones/foto1.jpg')"><div class="fw-slide-info"><h4>Aulas</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Comedor escolar con mesas largas y sillas azules, listo para el servicio de alimentos" style="background-image:url('media/Instalaciones/foto2.jpg')"><div class="fw-slide-info"><h4>Comedor escolar</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Patio cívico techado de la escuela, con columnas de colores y las aulas al fondo" style="background-image:url('media/Instalaciones/foto3.jpg')"><div class="fw-slide-info"><h4>Patio cívico</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Patio techado con columnas de colores, área verde y canasta de basquetbol al fondo" style="background-image:url('media/Instalaciones/foto4.jpg')"><div class="fw-slide-info"><h4>Canchas deportivas</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Biblioteca escolar con libreros de madera llenos de libros y material didáctico" style="background-image:url('media/Instalaciones/foto5.jpg')"><div class="fw-slide-info"><h4>Biblioteca escolar</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Pasillo de sanitarios con puertas de baño en fila" style="background-image:url('media/Instalaciones/foto6.jpg')"><div class="fw-slide-info"><h4>Sanitarios</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Hileras de hortalizas sembradas junto a la barda de la escuela" style="background-image:url('media/Instalaciones/foto7.jpg')"><div class="fw-slide-info"><h4>Huerto escolar</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Surcos de hortalizas recién sembradas junto a las aulas" style="background-image:url('media/Instalaciones/foto8.jpg')"><div class="fw-slide-info"><h4>Huerto escolar</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Charola con comida escolar: milanesa, sopa de pasta, ensalada y naranja" style="background-image:url('media/Instalaciones/foto9.jpg')"><div class="fw-slide-info"><h4>Desayunos calientes</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Varias charolas con comida balanceada servidas para los alumnos" style="background-image:url('media/Instalaciones/foto10.jpg')"><div class="fw-slide-info"><h4>Plato del Bien Comer</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Comedor escolar con mesas decoradas y sillas listas para los alumnos" style="background-image:url('media/Instalaciones/foto11.jpg')"><div class="fw-slide-info"><h4>Comedor</h4></div></div>
+    <div class="fw-slide fw-slide-photo" role="img" aria-label="Aula de cómputo con varias computadoras sobre mesas y pizarrón blanco" style="background-image:url('media/Instalaciones/foto12.jpg')"><div class="fw-slide-info"><h4>Aula de cómputo</h4></div></div>
   </div>
   <div class="fw-dots" id="dotsInst"></div>
   <div class="fw-controls"><button class="fw-btn" onclick="slideC('carInst',-1)" aria-label="Anterior">◀</button><button class="fw-btn" onclick="slideC('carInst',1)" aria-label="Siguiente">▶</button></div>
@@ -986,6 +1005,25 @@ addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggl
 const hb=document.getElementById('hamburgerBtn'),mm=document.getElementById('mobileMenu');
 hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active');document.body.style.overflow=mm.classList.contains('active')?'hidden':''});
 document.querySelectorAll('.mob-link').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('active');mm.classList.remove('active');document.body.style.overflow=''}));
+// Control de pausa del video de fondo (dron) — WCAG 2.2.2 Pause/Stop/Hide
+(function(){
+  const btn=document.getElementById('dronePauseBtn'),iframe=document.getElementById('droneVideo');
+  if(!btn||!iframe)return;
+  const iconPause=document.getElementById('droneIconPause'),iconPlay=document.getElementById('droneIconPlay');
+  let playing=true;
+  function send(func){iframe.contentWindow&&iframe.contentWindow.postMessage(JSON.stringify({event:'command',func,args:[]}),'*')}
+  function setState(isPlaying){
+    playing=isPlaying;
+    iconPause.style.display=playing?'block':'none';
+    iconPlay.style.display=playing?'none':'block';
+    btn.setAttribute('aria-pressed',String(!playing));
+    btn.setAttribute('aria-label',playing?'Pausar video de fondo':'Reanudar video de fondo');
+  }
+  btn.addEventListener('click',()=>{send(playing?'pauseVideo':'playVideo');setState(!playing)});
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    iframe.addEventListener('load',()=>{send('pauseVideo');setState(false)});
+  }
+})();
 // Reveal on scroll
 document.querySelectorAll('.rv,.rv-scale').forEach(el=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -50px 0px'}).observe(el));
 // Carousels — pauses auto-advance on hover

@@ -44,6 +44,17 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}ul{list-st
 @keyframes cPop{0%{opacity:.6;transform:translate(var(--ex),var(--ey)) translate(-50%,-50%)}100%{opacity:0;transform:translate(var(--ex),calc(var(--ey) - 20px)) translate(-50%,-50%) scale(.1)}}
 body.c-hov .c-dot{width:13px;height:13px;background:var(--sun)}
 @media(hover:none){body{cursor:auto}.c-dot,.c-particle{display:none!important}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  body{cursor:auto}
+  .c-dot,.c-particle{display:none!important}
+  .rv,.rv-scale{opacity:1!important;transform:none!important}
+}
+
+/* ═══ SKIP LINK ═══ */
+.skip-link{position:fixed;top:-60px;left:12px;background:var(--leaf-dark);color:#fff;padding:12px 22px;border-radius:0 0 var(--r-sm) var(--r-sm);font-weight:700;font-size:.85rem;z-index:100000;transition:top .2s ease}
+.skip-link:focus{top:0}
 
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .rv{opacity:0;transform:translateY(50px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}.rv.vis{opacity:1;transform:translateY(0)}
@@ -328,6 +339,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--sun)}
 </style>
 </head>
 <body>
+<a href="#hero" class="skip-link">Saltar al contenido principal</a>
 <div id="cDot" class="c-dot" aria-hidden="true"></div>
 
 <!-- ═══ BACK NAV ═══ -->
@@ -341,7 +353,7 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--sun)}
 </nav>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero">
+<section class="hero" id="hero" tabindex="-1">
   <div class="hero-shapes">
     <div class="leaf-shape ls1"></div>
     <div class="leaf-shape ls2"></div>
@@ -479,13 +491,13 @@ body.c-hov .c-dot{width:13px;height:13px;background:var(--sun)}
   <div class="container">
     <div class="sec-title rv"><h2><span aria-hidden="true">📷</span> El huerto en imágenes</h2><span class="accent"></span><p>Cada foto cuenta una historia de esfuerzo y aprendizaje</p></div>
     <div class="gallery-grid rv-scale">
-      <div class="gallery-item"><img src="media/huerto/foto1.jpg" alt="Huerto escolar 1" loading="lazy"></div>
-      <div class="gallery-item"><img src="media/huerto/foto2.jpg" alt="Huerto escolar 2" loading="lazy"></div>
-      <div class="gallery-item"><img src="media/huerto/foto3.jpg" alt="Huerto escolar 3" loading="lazy"></div>
-      <div class="gallery-item"><img src="media/huerto/foto4.jpg" alt="Huerto escolar 4" loading="lazy"></div>
-      <div class="gallery-item"><img src="media/huerto/foto5.jpg" alt="Huerto escolar 5" loading="lazy"></div>
-      <div class="gallery-item"><img src="media/huerto/foto6.jpg" alt="Huerto escolar 6" loading="lazy"></div>
-      <div class="gallery-item"><img src="media/huerto/foto7.jpg" alt="Huerto escolar 7" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto1.jpg" alt="Almácigos de cilantro recién germinado junto al letrero del grupo 2°B" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto2.jpg" alt="Hileras de hortalizas sembradas a lo largo del huerto, junto a las aulas" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto3.jpg" alt="Alumnas observando los surcos de cilantro sembrados por su grupo" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto4.jpg" alt="Alumnas usando una lupa para observar de cerca las plantas de cilantro" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto5.jpg" alt="Familias y alumnos preparando la tierra en surcos para sembrar" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto6.jpg" alt="Alumnos, docentes y familias sembrando árboles y regando el huerto en equipo" loading="lazy"></div>
+      <div class="gallery-item"><img src="media/huerto/foto7.jpg" alt="Madres de familia y alumnas revisando los surcos de cilantro sembrados" loading="lazy"></div>
     </div>
   </div>
 </section>
