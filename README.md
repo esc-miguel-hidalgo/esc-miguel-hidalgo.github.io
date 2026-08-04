@@ -55,8 +55,6 @@ Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git
         └── listado-utiles-escolares-2026-2027.pdf  # PDF completo con las 7 listas
 ```
 
-> **Nota:** El repositorio remoto contiene además una carpeta `img/` con fotos legadas que no se usan en la versión actual del sitio.
-
 ---
 
 ## Design System
