@@ -28,11 +28,11 @@ grep -n "595 923 4856\|dpr0560i" index.html
 ## Agregar una foto al carrusel de instalaciones
 
 1. Copiar la foto a `media/Instalaciones/foto13.jpg` (o el número que siga)
-2. En `index.html`, dentro de `<div class="fw-track" id="carInst">`, agregar:
+2. En `index.html`, dentro de `<div class="fw-carousel" id="carInst">`, agregar:
 
 ```html
-<div class="fw-slide fw-slide-photo"
-     style="background-image:url('media/Instalaciones/foto13.jpg')">
+<div class="fw-slide fw-slide-photo">
+  <img src="media/Instalaciones/foto13.jpg" alt="Descripción real de lo que se ve en la foto" loading="lazy">
   <div class="fw-slide-info"><h4>Nombre del espacio</h4></div>
 </div>
 ```
@@ -44,28 +44,33 @@ grep -n "595 923 4856\|dpr0560i" index.html
 - Resolución mínima: 1280 × 720 px
 - Orientación: horizontal (landscape)
 - Peso máximo recomendado: 300 KB (usar [Squoosh](https://squoosh.app) para comprimir)
+- El `alt` debe describir lo que se ve realmente (no "Instalaciones foto 13") — es lo único que perciben los lectores de pantalla de esa foto.
 
 ---
 
 ## Agregar un evento al carrusel de eventos
 
-El carrusel `#carEvents` acepta slides con imagen de fondo o con contenido HTML:
+El carrusel `#carEvents` (dentro de `<div class="fw-carousel" id="carEvents">`) usa una "facade" para no cargar el reproductor de YouTube hasta que alguien haga clic — ahorra datos móviles a quien nunca ve el video:
 
 ```html
-<!-- Slide con imagen -->
-<div class="fw-slide fw-slide-photo"
-     style="background-image:url('media/eventos/nombre-evento.jpg')">
+<div class="fw-slide fw-slide-video" data-yt-id="ID_DEL_VIDEO" data-yt-title="Descripción del video">
+  <button class="yt-facade" aria-label="Reproducir video: Descripción del video">
+    <img src="https://i.ytimg.com/vi/ID_DEL_VIDEO/hqdefault.jpg" alt="" loading="lazy">
+    <span class="yt-play-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg></span>
+  </button>
+</div>
+```
+
+El `ID_DEL_VIDEO` es el que aparece en la URL de YouTube (`youtube.com/watch?v=ESTE_ID`). El JS (`.yt-facade` click handler, al final del `<script>`) reemplaza el botón por el iframe real con autoplay al hacer clic — no hay que tocar nada más.
+
+Si en vez de un video quieres una foto (sin caption ni forma dedicada):
+
+```html
+<div class="fw-slide fw-slide-photo">
+  <img src="media/eventos/nombre-evento.jpg" alt="Descripción real de la foto" loading="lazy">
   <div class="fw-slide-info">
     <h4>Nombre del evento</h4>
     <p>Descripción breve</p>
-  </div>
-</div>
-
-<!-- Slide con contenido HTML (sin imagen) -->
-<div class="fw-slide fw-slide-event">
-  <div class="fw-event-content">
-    <h3>Título del evento</h3>
-    <p>Descripción del evento...</p>
   </div>
 </div>
 ```

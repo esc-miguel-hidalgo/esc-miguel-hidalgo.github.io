@@ -151,25 +151,23 @@ Para controlar el orden de aparición dentro de un grupo:
 
 ### Carrusel full-width (`fw-carousel`)
 
-Hay dos instancias: `#carEvents` (eventos) y `#carInst` (instalaciones). Ambos se inicializan con `initC(id, dotsContainerId)`.
+Hay dos instancias: `#carEvents` (eventos) y `#carInst` (instalaciones). Ambos se inicializan con `initC(id, dotsContainerId)`, dentro de una `.fw-carousel-section` (pausa el auto-advance en hover):
 
 ```html
-<div class="fw-carousel-section">        <!-- pausa auto-advance en hover -->
-  <div class="fw-carousel-wrap">
-    <div class="fw-track" id="carInst">  <!-- translateX mueve las slides -->
-      <div class="fw-slide fw-slide-photo"
-           style="background-image:url('media/Instalaciones/foto1.jpg')">
-        <div class="fw-slide-info">       <!-- caption opcional -->
-          <h4>Título de la foto</h4>
-        </div>
-      </div>
-      <!-- más slides... -->
+<div class="fw-carousel" id="carInst">        <!-- translateX mueve las slides -->
+  <div class="fw-slide fw-slide-photo">
+    <img src="media/Instalaciones/foto1.jpg" alt="Descripción real de la foto" loading="lazy">
+    <div class="fw-slide-info">                <!-- caption opcional -->
+      <h4>Título de la foto</h4>
     </div>
   </div>
-  <div class="fw-dots" id="dotsInst"></div>  <!-- dots generados por JS -->
-  <!-- botones prev/next opcionales con class="fw-btn" -->
+  <!-- más slides... -->
 </div>
+<div class="fw-dots" id="dotsInst"></div>       <!-- dots generados por JS -->
+<!-- botones prev/next opcionales con class="fw-btn" -->
 ```
+
+Los slides de foto usan `<img loading="lazy">` real (no `background-image`) para que el navegador difiera la carga y para que el `alt` sea accesible a lectores de pantalla. Los slides de video (`#carEvents`) usan una "facade" — botón `.yt-facade` con la miniatura de YouTube que sólo carga el iframe real al hacer clic (ver `CONTRIBUTING.md` → "Agregar un evento al carrusel de eventos").
 
 - Auto-advance cada **6 segundos**; se pausa al hacer hover sobre `.fw-carousel-section`
 - Soporta swipe en touch (umbral: 50px)
@@ -177,7 +175,7 @@ Hay dos instancias: `#carEvents` (eventos) y `#carInst` (instalaciones). Ambos s
 
 ### Cursor personalizado
 
-**Sólo en dispositivos con hover** (`@media(hover:none)` lo desactiva en touch).
+**Sólo en dispositivos con hover** (`@media(hover:none)` lo desactiva en touch) y **sólo si el usuario no pidió menos movimiento** (`@media(prefers-reduced-motion:reduce)` también lo desactiva). Es una capa decorativa *adicional* — el cursor nativo del sistema sigue visible en todo momento (`cursor:auto` en `body`), así que no interfiere con ajustes de accesibilidad del SO (tamaño/color de cursor).
 
 Estructura:
 ```html
