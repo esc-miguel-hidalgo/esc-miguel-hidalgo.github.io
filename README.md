@@ -32,6 +32,8 @@ Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git
 ├── favicon.ico
 ├── favicon-32x32.png
 ├── apple-touch-icon.png
+├── docs/
+│   └── portal-docente-pda.md    # Plan del portal docente + PDA (pendiente, no implementado)
 └── media/
     ├── panoramica.jpg          # Foto panorámica hero (index.html)
     ├── Instalaciones/          # Carrusel de fotos del plantel (12 fotos)
@@ -321,6 +323,7 @@ git push
 
 | Prioridad | Tarea |
 |---|---|
+| Alta | Portal docente con login + seguimiento curricular PDA, a pedido de la dirección — plan completo en [`docs/portal-docente-pda.md`](docs/portal-docente-pda.md) (no implementado aún) |
 | Media | Formulario de contacto online (reemplazar los CTAs de tel/email) |
 | Media | Sección de preguntas frecuentes (FAQ) |
 | Media | Links a redes sociales en footer |
