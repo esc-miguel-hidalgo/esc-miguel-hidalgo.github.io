@@ -15,9 +15,10 @@ Sitio web estático de la Escuela Primaria "Miguel Hidalgo", C.C.T. 15DPR0560I, 
 | CSS | Inline `<style>` en cada página, design tokens vía CSS custom properties |
 | JS | Vanilla JS inline `<script>`, sin dependencias ni bundler |
 | Fuentes | Google Fonts: **Baloo 2** (display/headings) + **DM Sans** (body) |
-| Hosting | GitHub Pages — rama `main`, despliegue automático en cada push |
+| Hosting | GitHub Pages — rama `main`, despliegue automático en cada push vía GitHub Actions (`.github/workflows/pages.yml`) |
+| Portal docente | `portal/`: Vite + React + Supabase (Auth, Postgres con RLS, Storage privado). Es la única parte que se compila; ver abajo |
 
-Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git es suficiente para trabajar.
+El sitio público no tiene framework, ni build step, ni node_modules: cualquier editor de texto + git es suficiente para trabajar en él. La excepción es el portal docente (`portal/`), que vive aparte y GitHub compila solo en cada push.
 
 ---
 
@@ -33,7 +34,17 @@ Sin framework, sin build step, sin node_modules. Cualquier editor de texto + git
 ├── favicon-32x32.png
 ├── apple-touch-icon.png
 ├── docs/
-│   └── portal-docente-pda.md    # Plan del portal docente + PDA (pendiente, no implementado)
+│   └── portal-docente-pda.md    # Diseño del portal docente + PDA (por qué Supabase, cómo está hecho, pendientes)
+├── portal/                 # Portal docente (Vite + React) → se publica en /portal/
+│   ├── src/                #   app: vistas, catálogo PDA, PDF de validación
+│   ├── datos-fuente/       #   programa sintético NEM original (JSON)
+│   ├── scripts/            #   generar catálogo con ids estables, respaldar archivos
+│   ├── test/               #   pruebas de reglas RLS (Postgres en memoria), catálogo y PDF
+│   └── demo/               #   Supabase falso para `npm run demo`
+├── supabase/
+│   ├── migrations/         # Esquema, reglas RLS y Storage del portal (se ejecutan en Supabase)
+│   └── tests/              # Imitación mínima de Supabase para las pruebas
+├── .github/workflows/      # Publicar sitio, respaldo semanal, mantener activo Supabase
 └── media/
     ├── panoramica.jpg          # Foto panorámica hero (index.html)
     ├── Instalaciones/          # Carrusel de fotos del plantel (12 fotos)
@@ -250,6 +261,8 @@ La función `printImage(src, title)` (al final del `<script>`) abre la imagen so
 ### Por qué no hay framework
 El sitio lo mantiene personal de la escuela sin perfil técnico. Un único archivo HTML editable en cualquier editor es más sostenible que un proyecto con dependencias de npm.
 
+El portal docente es la excepción a propósito (octubre 2026): es una aplicación con login, estados y PDF, y reutiliza un prototipo React ya hecho. Vive aislado en `portal/` para que la regla siga valiendo para todo lo demás. Detalle en `docs/portal-docente-pda.md`.
+
 ### Por qué no hay canvas en el cursor
 La versión anterior usaba `<canvas>` con un `requestAnimationFrame` que corría **sin parar** aunque el mouse no se moviera, quemando CPU innecesariamente. La versión actual usa un pool de 12 divs pre-creados y el rAF sólo corre cuando hay movimiento real.
 
@@ -303,7 +316,7 @@ git diff index.html
 git add index.html huerto.html
 git commit -m "descripción del cambio"
 
-# 4. Push — despliega automáticamente en GitHub Pages (1-2 min)
+# 4. Push — GitHub Actions publica en GitHub Pages (2-3 min; ver pestaña Actions → "Publicar sitio")
 git push
 ```
 
@@ -323,7 +336,7 @@ git push
 
 | Prioridad | Tarea |
 |---|---|
-| Alta | Portal docente con login + seguimiento curricular PDA, a pedido de la dirección — plan completo en [`docs/portal-docente-pda.md`](docs/portal-docente-pda.md) (no implementado aún) |
+| Alta | Portal docente: **construido**; falta crear el proyecto de Supabase, aprobar el aviso de privacidad y hacer el piloto. Pasos en `CONTRIBUTING.md` → *Portal docente*, pendientes en [`docs/portal-docente-pda.md`](docs/portal-docente-pda.md) |
 | Media | Formulario de contacto online (reemplazar los CTAs de tel/email) |
 | Media | Sección de preguntas frecuentes (FAQ) |
 | Media | Links a redes sociales en footer |

@@ -213,7 +213,97 @@ git push
 
 El sitio se actualiza en **1-2 minutos** en https://esc-miguel-hidalgo.github.io.
 
-Para verificar el despliegue: GitHub → repositorio → pestaña **Actions** → ver el workflow "pages build and deployment".
+Para verificar el despliegue: GitHub → repositorio → pestaña **Actions** → ver el workflow "Publicar sitio". Si sale en rojo, el sitio anterior sigue publicado; revisar el error (casi siempre es una prueba del portal).
+
+---
+
+## Portal docente (`portal/`)
+
+Espacio con login para docentes y dirección: selección trimestral de PDA, validación, PDF y documentos.
+Diseño y razones en `docs/portal-docente-pda.md`. **Editar el sitio público no requiere tocar nada de esto.**
+
+A diferencia del resto del sitio, el portal sí se compila (Vite + React). GitHub lo hace solo en cada push
+(`.github/workflows/pages.yml`) y lo publica en https://esc-miguel-hidalgo.github.io/portal/.
+
+### Puesta en marcha (una sola vez)
+
+1. **Cuenta de Supabase con un correo de la escuela** (no personal) en https://supabase.com. Crear un proyecto.
+   Guardar la contraseña de la base en un lugar seguro.
+2. **SQL Editor** → pegar y ejecutar, en orden, cada archivo de `supabase/migrations/`.
+3. **Authentication → Sign In / Providers**: desactivar *Allow new users to sign up*. Nadie se registra solo.
+   **Authentication → URL Configuration**: *Site URL* y *Redirect URLs* = `https://esc-miguel-hidalgo.github.io/portal/`
+   (lo usa el enlace de "¿Olvidaste tu contraseña?").
+4. **GitHub → Settings → Pages → Source: GitHub Actions.**
+5. **GitHub → Settings → Secrets and variables → Actions**:
+   - *Variables*: `SUPABASE_URL` y `SUPABASE_ANON_KEY` (Supabase → Project Settings → API). Son públicas por diseño.
+   - *Secrets* (para el respaldo): `SUPABASE_DB_URL` (Connect → *Session pooler*), `SUPABASE_SERVICE_ROLE_KEY` y
+     `BACKUP_PASSPHRASE`. La passphrase debe ser de 4 o más palabras al azar, y hay que guardarla también fuera de
+     GitHub: sin ella el respaldo no se abre. **El repo es público**: los respaldos se pueden descargar, y lo único que
+     los protege es esa contraseña.
+6. Correr a mano *Actions → Publicar sitio*, *Mantener activo Supabase* y *Respaldo del portal* (botón *Run workflow*)
+   para confirmar que los tres salen en verde.
+
+### Altas, bajas y grupos (SQL Editor de Supabase)
+
+Crear la cuenta en **Authentication → Users → Add user → Create new user** (marcar *Auto confirm*) y después:
+
+```sql
+-- Nombre como debe salir en el PDF
+update perfiles set nombre = 'Mtra. Nombre Apellido'
+ where id = (select id from auth.users where email = 'correo@ejemplo.com');
+
+-- Solo para la directora
+update perfiles set rol = 'directora'
+ where id = (select id from auth.users where email = 'correo@ejemplo.com');
+
+-- Grupo del ciclo (uno por grado/grupo/ciclo). Cada ciclo nuevo se crean grupos nuevos;
+-- los del ciclo anterior se quedan como historial.
+insert into grupos (ciclo, grado, grupo, docente_id)
+values ('2026-2027', 3, 'A', (select id from auth.users where email = 'correo@ejemplo.com'));
+
+-- Cambiar de docente un grupo
+update grupos set docente_id = (select id from auth.users where email = 'nueva@ejemplo.com')
+ where ciclo = '2026-2027' and grado = 3 and grupo = 'A';
+
+-- Baja: la cuenta deja de entrar; sus documentos se quedan en el grupo
+update perfiles set activo = false
+ where id = (select id from auth.users where email = 'correo@ejemplo.com');
+```
+
+Desde el SQL Editor no aplican las reglas de la app: se puede corregir cualquier dato, así que hay que tener cuidado.
+
+### Si Supabase se pausa
+
+Supabase Free pausa el proyecto tras 7 días sin uso. El workflow *Mantener activo Supabase* lo evita, pero:
+
+- Si *Mantener activo* sale en rojo, el proyecto ya está pausado. Entrar al dashboard y pulsar **Restore**. Los datos no se pierden.
+- GitHub **desactiva los workflows programados** de un repo sin commits en 60 días (avisa por correo).
+  Si llega ese aviso: *Actions → Mantener activo Supabase → Enable workflow*. Lo mismo con *Respaldo del portal*.
+
+### Restaurar un respaldo
+
+1. *Actions → Respaldo del portal →* la ejecución que se quiera *→ Artifacts*: descargar el `.gpg`.
+2. `gpg -d portal-respaldo-AAAA-MM-DD.tar.gz.gpg | tar -xzf -` (pide la passphrase).
+3. Base: en un proyecto vacío, ejecutar `respaldo/roles.sql`, `respaldo/schema.sql` y luego `respaldo/data.sql` con
+   `psql` (es el mismo orden que usa el simulacro de `respaldo.yml`).
+4. Archivos: `respaldo/archivos/` tiene la misma estructura de carpetas del bucket `documentos`. Se suben de nuevo
+   respetando las rutas.
+
+### Desarrollo local
+
+```bash
+cd portal
+npm install
+npm test          # reglas de la base (Postgres en memoria), catálogo y PDF
+npm run demo      # la app con un Supabase falso en memoria: directora@demo.mx, docente1@demo.mx (cualquier contraseña)
+cp .env.example .env.local && npm run dev   # contra el Supabase real
+```
+
+- **Cambiar la base de datos:** agregar un archivo **nuevo** en `supabase/migrations/` (nunca editar uno ya aplicado),
+  agregar su prueba en `portal/test/reglas.test.js` y ejecutarlo en el SQL Editor.
+- **Cambiar el catálogo de PDA:** editar `portal/datos-fuente/programa_sintetico_unificado.json` y correr
+  `npm run catalogo`. Si avisa que hay ids que desaparecen, los PDA guardados con esos ids aparecerán como
+  "ya no existen en el catálogo".
 
 ---
 
