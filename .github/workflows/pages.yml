@@ -58,7 +58,7 @@ jobs:
           mkdir _site
           # Todo lo del repo menos lo que no es del sitio público.
           rsync -a ./ _site/ \
-            --exclude '.git' --exclude '.github' --exclude '_site' \
+            --exclude '.git' --exclude '.github' --exclude '.claude' --exclude '_site' \
             --exclude 'portal' --exclude 'supabase' --exclude '.DS_Store' --exclude '.gitignore'
           mkdir _site/portal
           cp -R portal/dist/. _site/portal/

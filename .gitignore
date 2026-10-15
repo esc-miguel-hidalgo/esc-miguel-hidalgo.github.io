@@ -11,3 +11,6 @@
 
 # Sistema
 Thumbs.db
+
+# Herramientas de Claude Code
+.playwright-mcp/
