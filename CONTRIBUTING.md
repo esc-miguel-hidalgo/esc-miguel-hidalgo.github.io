@@ -233,7 +233,7 @@ A diferencia del resto del sitio, el portal sí se compila (Vite + React). GitHu
 3. **Authentication → Sign In / Providers**: desactivar *Allow new users to sign up*. Nadie se registra solo.
    **Authentication → URL Configuration**: *Site URL* y *Redirect URLs* = `https://esc-miguel-hidalgo.github.io/portal/`
    (lo usa el enlace de "¿Olvidaste tu contraseña?").
-4. **GitHub → Settings → Pages → Source: GitHub Actions.**
+4. **GitHub → Settings → Pages → Source: GitHub Actions.** *(Hecho el 15 oct 2026.)*
 5. **GitHub → Settings → Secrets and variables → Actions**:
    - *Variables*: `SUPABASE_URL` y `SUPABASE_ANON_KEY` (Supabase → Project Settings → API). Son públicas por diseño.
    - *Secrets* (para el respaldo): `SUPABASE_DB_URL` (Connect → *Session pooler*), `SUPABASE_SERVICE_ROLE_KEY` y
