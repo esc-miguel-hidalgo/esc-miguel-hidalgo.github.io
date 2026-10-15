@@ -11,7 +11,7 @@ Complemento de `/close` (`.claude/skills/close/SKILL.md`). `/close` deja al día
 `/open` los retoma.
 
 Adaptado del patrón `/open` de `seprn-sitio` y `barber-saas`, no copiado literal. Este repo no tiene
-`CLAUDE.md`, `BITACORA.md`, `MASTER_PLAN.md` ni Vercel. Las convenciones viven en `README.md` y
+`BITACORA.md`, `MASTER_PLAN.md` ni Vercel. Las reglas básicas están en `CLAUDE.md` (se carga solo), los detalles en `README.md` y
 `CONTRIBUTING.md`, y el estado de sesiones anteriores en la memoria del proyecto, que se carga sola.
 
 ## 0. Sesiones vinculadas (antes de leer nada)

@@ -60,7 +60,8 @@ Riesgo nuevo de Supabase Free: pausa el proyecto tras 7 días sin uso. Lo cubre 
 ## Pendiente
 
 1. Crear la cuenta y el proyecto de Supabase, y cargar en GitHub las variables y secretos (pasos en `CONTRIBUTING.md`).
-   Pages ya publica con GitHub Actions desde el 15 oct 2026.
+   Pages ya publica con GitHub Actions desde el 15 oct 2026. En el primer respaldo real, revisar que el workflow
+   `respaldo.yml` termine bien: `supabase/setup-cli@v3` y `actions/upload-artifact@v7` se actualizaron sin poder probarse.
 2. Que la dirección apruebe el aviso de privacidad (`portal/public/privacidad.html`, hoy es borrador) y el formato del PDF.
 3. Piloto: la directora y 1 o 2 docentes de un grado durante unas semanas. Después, el resto.
 4. Orientaciones didácticas del grado piloto, desde los archivos de la escuela.

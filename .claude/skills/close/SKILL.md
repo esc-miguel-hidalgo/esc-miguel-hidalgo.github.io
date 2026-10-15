@@ -10,7 +10,7 @@ Complemento de `/open` (`.claude/skills/open/SKILL.md`): lo que aquí se deja es
 la próxima vez.
 
 Adaptado del patrón `/close` de `seprn-sitio` y `barber-saas`, no copiado literal. Este repo no tiene
-bitácora ni `CLAUDE.md`. El registro de la sesión queda en:
+bitácora; `CLAUDE.md` guarda solo reglas permanentes (actualízalo si una regla cambió). El registro de la sesión queda en:
 
 | Dónde | Qué va ahí |
 |---|---|

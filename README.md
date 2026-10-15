@@ -45,7 +45,9 @@ El sitio público no tiene framework, ni build step, ni node_modules: cualquier 
 │   ├── migrations/         # Esquema, reglas RLS y Storage del portal (se ejecutan en Supabase)
 │   └── tests/              # Imitación mínima de Supabase para las pruebas
 ├── .github/workflows/      # Publicar sitio, respaldo semanal, mantener activo Supabase
+├── CLAUDE.md               # Reglas del proyecto para Claude Code (no se publica)
 ├── .claude/skills/         # /open y /close para Claude Code (abrir y cerrar sesión de trabajo; no se publican)
+├── .claude/hooks/          # Bloquea editar .env.local, originales de media/ y migraciones existentes; corre pruebas del portal
 └── media/
     ├── panoramica.jpg          # Foto panorámica hero (index.html)
     ├── Instalaciones/          # Carrusel de fotos del plantel (12 fotos)
