@@ -1,0 +1,81 @@
+# Publica el sitio en GitHub Pages.
+#
+# El sitio público (index.html, huerto.html, inscripciones-*.html, media/...) se
+# copia TAL CUAL, sin compilar nada: se sigue editando a mano como siempre.
+# Solo el portal docente (portal/) se compila con Vite y se publica en /portal/.
+#
+# Requiere (una sola vez): Settings → Pages → Source: "GitHub Actions".
+# Variables del repo (Settings → Secrets and variables → Actions → Variables):
+#   SUPABASE_URL, SUPABASE_ANON_KEY  → públicas por diseño (la seguridad está en RLS).
+# Sin ellas el portal se publica igual, mostrando "no configurado".
+
+name: Publicar sitio
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portal/package-lock.json
+
+      - name: Instalar dependencias del portal
+        working-directory: portal
+        run: npm ci
+
+      - name: Probar reglas de la base, catálogo y PDF
+        working-directory: portal
+        run: npm test
+
+      - name: Compilar el portal
+        working-directory: portal
+        env:
+          VITE_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+        run: npm run build
+
+      - name: Armar el sitio
+        run: |
+          mkdir _site
+          # Todo lo del repo menos lo que no es del sitio público.
+          rsync -a ./ _site/ \
+            --exclude '.git' --exclude '.github' --exclude '_site' \
+            --exclude 'portal' --exclude 'supabase' --exclude '.DS_Store' --exclude '.gitignore'
+          mkdir _site/portal
+          cp -R portal/dist/. _site/portal/
+          echo "Páginas publicadas:"; find _site -maxdepth 1 -name '*.html'
+          test -f _site/index.html && test -f _site/portal/index.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

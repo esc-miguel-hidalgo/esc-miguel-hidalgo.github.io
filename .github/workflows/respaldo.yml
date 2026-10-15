@@ -1,0 +1,148 @@
+# Respaldo semanal del portal docente (base de datos + archivos).
+# Adaptado de barber-saas/.github/workflows/respaldo.yml.
+#
+# Supabase Free no da respaldos descargables. Este workflow:
+#   1. Vuelca roles, esquema y datos (public + auth) con `supabase db dump`.
+#   2. Descarga todos los archivos del bucket privado `documentos`.
+#   3. Lo PRUEBA: restaura el volcado en un Supabase local y compara el número
+#      de filas contra producción; revisa que las reglas RLS sigan ahí.
+#   4. Lo cifra (AES-256, gpg) y lo guarda 90 días como artifact.
+#
+# ⚠ El repo es PÚBLICO: los artifacts los puede descargar cualquier cuenta de
+# GitHub. Por eso todo sale cifrado y nada se imprime en el log. La contraseña
+# debe ser larga (4+ palabras al azar) y vivir también fuera de GitHub.
+#
+# Secretos (Settings → Secrets and variables → Actions → Secrets):
+#   SUPABASE_DB_URL           → cadena del *Session pooler* (puerto 5432); la directa es solo IPv6.
+#   SUPABASE_SERVICE_ROLE_KEY → para descargar los archivos privados.
+#   BACKUP_PASSPHRASE         → contraseña del cifrado.
+# Variable: SUPABASE_URL (la misma que usa pages.yml).
+#
+# Mientras falten los secretos, el workflow termina sin hacer nada (portal sin configurar).
+# Cómo restaurar: CONTRIBUTING.md → Portal docente → Restaurar un respaldo.
+
+name: Respaldo del portal
+
+on:
+  schedule:
+    - cron: '41 9 * * 1' # lunes 03:41 CDMX
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  respaldo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      LOCAL_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+
+    steps:
+      - name: Revisar configuración
+        id: config
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ] || [ -z "$SUPABASE_URL" ]; then
+            echo "Portal sin configurar (faltan secretos). No hay nada que respaldar."
+            echo "listo=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "listo=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.config.outputs.listo == 'si'
+        uses: actions/checkout@v5
+
+      - if: steps.config.outputs.listo == 'si'
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - if: steps.config.outputs.listo == 'si'
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Volcar roles, esquema y datos
+        if: steps.config.outputs.listo == 'si'
+        run: |
+          mkdir -p respaldo
+          supabase db dump --db-url "$SUPABASE_DB_URL" -f respaldo/roles.sql --role-only
+          supabase db dump --db-url "$SUPABASE_DB_URL" -f respaldo/schema.sql
+          supabase db dump --db-url "$SUPABASE_DB_URL" -f respaldo/data.sql --use-copy --data-only -s public,auth
+          ls -la respaldo
+
+      - name: Descargar archivos del bucket
+        if: steps.config.outputs.listo == 'si'
+        working-directory: portal
+        run: |
+          npm ci --omit=dev
+          node scripts/respaldar-archivos.mjs ../respaldo/archivos
+
+      - name: Contar filas en producción
+        if: steps.config.outputs.listo == 'si'
+        run: |
+          cat > conteo.sql <<'SQL'
+          select 'auth.users', count(*) from auth.users
+          union all select 'perfiles', count(*) from public.perfiles
+          union all select 'grupos', count(*) from public.grupos
+          union all select 'selecciones', count(*) from public.selecciones
+          union all select 'seleccion_pda', count(*) from public.seleccion_pda
+          union all select 'documentos', count(*) from public.documentos
+          union all select 'bitacora', count(*) from public.bitacora
+          order by 1;
+          SQL
+          psql "$SUPABASE_DB_URL" -At -F ' ' -f conteo.sql > conteo-produccion.txt
+          cat conteo-produccion.txt
+          # Cada documento registrado debe tener su archivo en el respaldo.
+          docs=$(grep '^documentos ' conteo-produccion.txt | cut -d' ' -f2)
+          archivos=$(grep -c . respaldo/archivos/LISTA.txt || true)
+          echo "documentos=$docs archivos=$archivos"
+          [ "$archivos" -ge "$docs" ] || { echo "::error::Hay $docs documentos registrados pero solo $archivos archivos"; exit 1; }
+
+      - name: Simulacro de restauración
+        if: steps.config.outputs.listo == 'si'
+        run: |
+          supabase init --force
+          supabase start -x studio,imgproxy,edge-runtime,logflare,vector,realtime,storage-api
+          grep -viE '(SET +"?log_|ON PARAMETER +"?log_)' respaldo/roles.sql > roles-restaurar.sql
+          psql "$LOCAL_DB_URL" --single-transaction --variable ON_ERROR_STOP=1 \
+            --file roles-restaurar.sql --file respaldo/schema.sql \
+            --command 'SET session_replication_role = replica' --file respaldo/data.sql
+          psql "$LOCAL_DB_URL" -At -F ' ' -f conteo.sql > conteo-restaurado.txt
+          diff conteo-produccion.txt conteo-restaurado.txt || {
+            # Alguien pudo escribir entre el volcado y el conteo: se aceptan hasta 2 filas.
+            awk 'NR==FNR { p[$1]=$2; next } { if (($2 == 0 && p[$1] > 0) || p[$1] - $2 > 2) { print "::error::" $1 ": producción " p[$1] ", restaurado " $2; malo=1 } } END { exit malo }' \
+              conteo-produccion.txt conteo-restaurado.txt
+          }
+          # Las reglas de acceso son la seguridad del portal: deben venir en el respaldo.
+          n=$(psql "$LOCAL_DB_URL" -At -c "select count(*) from pg_policies where schemaname = 'public'")
+          [ "$n" -ge 14 ] || { echo "::error::Solo $n políticas RLS en lo restaurado (se esperaban 14)"; exit 1; }
+          echo "Simulacro OK ($n políticas RLS)"
+
+      - name: Comprimir, cifrar y comprobar
+        if: steps.config.outputs.listo == 'si'
+        run: |
+          archivo="portal-respaldo-$(date -u +%Y-%m-%d).tar.gz.gpg"
+          tar -czf - respaldo conteo-produccion.txt \
+            | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 3 \
+                  --symmetric --cipher-algo AES256 -o "$archivo" 3<<<"$BACKUP_PASSPHRASE"
+          gpg --batch --pinentry-mode loopback --passphrase-fd 3 -d "$archivo" 3<<<"$BACKUP_PASSPHRASE" \
+            | tar -tzf - > contenido.txt
+          for f in respaldo/roles.sql respaldo/schema.sql respaldo/data.sql respaldo/archivos/LISTA.txt; do
+            grep -qx "$f" contenido.txt || { echo "::error::Falta $f en el archivo cifrado"; exit 1; }
+          done
+          rm -rf respaldo   # que no quede nada sin cifrar en el runner
+          ls -la "$archivo"
+          echo "ARCHIVO=$archivo" >> "$GITHUB_ENV"
+
+      - if: steps.config.outputs.listo == 'si'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARCHIVO }}
+          path: ${{ env.ARCHIVO }}
+          retention-days: 90
+          if-no-files-found: error
